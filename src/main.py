@@ -1,20 +1,18 @@
-import customtkinter
+import customtkinter as ctk
 
 
-class App(customtkinter.CTk):
+class App(ctk.CTk):
 
     def __init__(self):
         super().__init__()
-        self.title("Custom Tkinter")
-        self.geometry("400x400")
-        self.label = customtkinter.CTkLabel(self, text="Hello, World!")
-        self.label.pack(pady=10)
-        self.button = customtkinter.CTkButton(
-            self, text="Click Me", command=self.on_click)
-        self.button.pack(pady=10)
+        # configure window
+        self.title("FlowFusion 1.0")
+        self.geometry(f"{1100}x{580}")
 
-    def on_click(self):
-        self.label.configure(text="Button Clicked!")
+        # configure grid layout (4x4)
+        self.grid_columnconfigure(1, weight=0)
+        self.grid_columnconfigure((2), weight=1)
+        self.grid_rowconfigure((0, 1), weight=1)
 
 
 if __name__ == "__main__":
