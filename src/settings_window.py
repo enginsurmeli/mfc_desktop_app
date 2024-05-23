@@ -53,17 +53,11 @@ class SettingsWindow(ctk.CTkToplevel):
             self.settings_frame, orient="horizontal")
         separator_1.grid(row=1, column=0, columnspan=4,
                          padx=10, pady=5, sticky="ew")
-        camera_label = ctk.CTkLabel(
-            self.settings_frame, text="Camera")
-        camera_label.grid(row=2, column=0, padx=10, pady=10)
-        separator_2 = ttk.Separator(self.settings_frame, orient="horizontal")
-        separator_2.grid(row=3, column=0, columnspan=4,
-                         padx=10, pady=5, sticky="ew")
         appearance_label = ctk.CTkLabel(
             self.settings_frame, text="Appearance")
         appearance_label.grid(row=4, column=0, padx=10, pady=10)
-        separator_3 = ttk.Separator(self.settings_frame, orient="horizontal")
-        separator_3.grid(row=5, column=0, columnspan=4,
+        separator_2 = ttk.Separator(self.settings_frame, orient="horizontal")
+        separator_2.grid(row=5, column=0, columnspan=4,
                          padx=10, pady=5, sticky="ew")
         save_folder_label = ctk.CTkLabel(
             self.settings_frame, text="Save Location")
@@ -87,15 +81,6 @@ class SettingsWindow(ctk.CTkToplevel):
             self.settings_frame, values=line_endings)
         self.line_endings_optionmenu.grid(row=0, column=3, padx=10, pady=10)
 
-        # get a list of available video devices
-        # self.graph = FilterGraph() # this work only on windows
-
-        # fill optionmenu with video devices
-        # self.camera_list = self.graph.get_input_devices()
-        self.camera_optionmenu = ctk.CTkOptionMenu(
-            self.settings_frame, values=self.camera_list, dynamic_resizing=False)
-        self.camera_optionmenu.grid(row=2, column=1, padx=10, pady=10)
-
         # create a list of appearance modes and accent colors
         self.appearance_optionmenu = ctk.CTkOptionMenu(
             self.settings_frame, values=["Light", "Dark", "System"])
@@ -117,11 +102,9 @@ class SettingsWindow(ctk.CTkToplevel):
         self.setCurrentSettings()
 
     def setCurrentSettings(self):
-        camera_index = self.settings_data.get('camera_index')
         self.serial_ports_optionmenu.set(self.settings_data.get('port'))
         self.baud_rates_optionmenu.set(self.settings_data.get('baudrate'))
         self.line_endings_optionmenu.set(self.settings_data.get('lineending'))
-        self.camera_optionmenu.set(self.camera_list[camera_index])
         self.appearance_optionmenu.set(self.settings_data.get('appearance'))
         self.save_folder_entry.delete(0, "end")
         self.save_folder_entry.insert(0, self.settings_data.get('save_folder'))
@@ -143,12 +126,6 @@ class SettingsWindow(ctk.CTkToplevel):
         baud_rate = self.baud_rates_optionmenu.get()
         line_ending = self.line_endings_optionmenu.get()
 
-        # get camera index
-        camera = self.camera_optionmenu.get()
-        for i, device in enumerate(self.camera_list):
-            if device == camera:
-                camera_index = i
-
         # change appearance mode
         appearance = self.appearance_optionmenu.get()
 
@@ -158,8 +135,6 @@ class SettingsWindow(ctk.CTkToplevel):
         settings_data['baudrate'] = baud_rate
         settings_data['port'] = serial_port
         settings_data['portlist'] = self.ports_list
-        settings_data['camera_index'] = camera_index
-        settings_data['cameralist'] = self.camera_list
         settings_data['appearance'] = appearance
         settings_data['save_folder'] = self.save_folder_entry.get()
         with open('settings.json', 'w') as jfile:
