@@ -31,7 +31,7 @@ class App(ctk.CTk):
 
         # create frames
         self.menu_frame = menu.Menu(self)
-        self.menu_frame.grid(row=0, column=0, sticky="ns")
+        self.menu_frame.grid(row=0, column=0, rowspan=2, sticky="ns")
 
     def sendSettingsData(self):
         pass
