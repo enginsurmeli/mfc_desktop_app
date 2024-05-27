@@ -1,0 +1,10 @@
+{
+    "lineending": "None",
+    "baudrate": "9600",
+    "port": "CTkOptionMenu",
+    "portlist": [
+        "/dev/cu.Bluetooth-Incoming-Port"
+    ],
+    "appearance": "Light",
+    "save_folder": ""
+}

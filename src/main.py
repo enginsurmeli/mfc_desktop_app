@@ -1,7 +1,7 @@
 import customtkinter as ctk
 
 import serial_console
-import settings_window
+import menu
 import quit_app_window
 
 
@@ -15,12 +15,26 @@ class App(ctk.CTk):
 
         # configure window
         self.title("FlowFusion 1.0")
-        self.geometry(f"{1100}x{580}")
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        app_window_width = 1100
+        app_window_height = 580
+        self.geometry(
+            f"{app_window_width}x{app_window_height}+{int(screen_width/2-app_window_width/2)}+{int(screen_height/2-app_window_height/2)}")
+        self.minsize(app_window_width, app_window_height)
+        self.grab_set()
 
-        # configure grid layout (4x4)
-        self.grid_columnconfigure(1, weight=0)
-        self.grid_columnconfigure((2), weight=1)
+        # configure grid layout
+        self.grid_columnconfigure(0, weight=0)
+        self.grid_columnconfigure((1), weight=1)
         self.grid_rowconfigure((0, 1), weight=1)
+
+        # create frames
+        self.menu_frame = menu.Menu(self)
+        self.menu_frame.grid(row=0, column=0, sticky="ns")
+
+    def sendSettingsData(self):
+        pass
 
     def saveSettingsOnExit(self):
         pass
