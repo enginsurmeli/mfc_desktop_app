@@ -12,8 +12,10 @@ class Menu(ctk.CTkFrame):
 
         settings_button = ctk.CTkButton(
             self, text="Settings", command=self.openSettings)
-        settings_button.grid(
-            row=0, column=0, padx=inner_frame_padding, pady=inner_frame_padding)
+        # settings_button.grid(
+        #     row=0, column=0, padx=inner_frame_padding, pady=inner_frame_padding)
+        settings_button.pack(
+            side="top", padx=inner_frame_padding, pady=inner_frame_padding)
 
     def openSettings(self):
         settings = settings_window.SettingsWindow(

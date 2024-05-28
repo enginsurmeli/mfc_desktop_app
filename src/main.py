@@ -1,5 +1,8 @@
 import customtkinter as ctk
 import json
+import os
+import sys
+from PIL import ImageTk
 
 import serial_console
 import menu
@@ -25,6 +28,22 @@ class App(ctk.CTk):
         self.minsize(app_window_width, app_window_height)
         self.grab_set()
 
+        # load app icon
+        self.current_folder = os.getcwd()
+        # self.current_folder = globals()['_dh'][0] # Use this for jupyter notebook
+        self.filename = sys.argv[0].rsplit('.', 1)[0]
+        icons_folder = os.path.join('src', 'icons')
+        self.image_path = os.path.join(self.current_folder, icons_folder)
+
+        try:
+            # self.iconbitmap(os.path.join(self.image_path, "microscope_logo.ico"))
+            iconpath = ImageTk.PhotoImage(file=os.path.join(
+                self.image_path, "app_logo.png"))
+            self.wm_iconbitmap()
+            self.after(300, lambda: self.iconphoto(False, iconpath))
+        except:
+            pass
+
         # configure grid layout
         self.grid_columnconfigure(0, weight=0)
         self.grid_columnconfigure((1), weight=1)
@@ -32,10 +51,10 @@ class App(ctk.CTk):
 
         # create frames
         self.menu_frame = menu.Menu(self)
-        self.menu_frame.grid(row=0, column=0, rowspan=2, sticky="ns")
+        self.menu_frame.grid(row=0, column=0, sticky="nsew")
 
         self.serial_console_frame = serial_console.SerialConsole(self)
-        self.serial_console_frame.grid(row=1, column=1, sticky="nsew")
+        self.serial_console_frame.grid(row=1, column=0, sticky="ns")
 
         settings_data = self.loadSettings()
         self.updateSettings(settings_data)
