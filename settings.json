@@ -1,9 +1,10 @@
 {
-    "lineending": "None",
-    "baudrate": "9600",
-    "port": "CTkOptionMenu",
+    "lineending": "CR",
+    "baudrate": "115200",
+    "port": "/dev/cu.usbserial-120",
     "portlist": [
-        "/dev/cu.Bluetooth-Incoming-Port"
+        "/dev/cu.Bluetooth-Incoming-Port",
+        "/dev/cu.usbserial-120"
     ],
     "appearance": "Dark",
     "save_folder": ""
