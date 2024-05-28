@@ -162,3 +162,7 @@ cython_debug/
 # icons, images etc.
 icons/
 misc/
+
+#.vscode and .DS_Store
+.vscode/
+.DS_Store
