@@ -204,13 +204,13 @@ class SerialConsole(customtkinter.CTkFrame):
         except:
             # portCbo.set('Select port')
             # self.writeConsole('failed.\n')
-            self.master.updateCNCStatus('Disconnected')
+            self.master.updateSerialDeviceStatus('Disconnected')
             self.currentPort.port = None
         if self.currentPort.is_open:
             self.enableSending()
             self.rxPolling()
             # self.writeConsole('is successful.\n')
-            self.master.updateCNCStatus('Connected')
+            self.master.updateSerialDeviceStatus('Connected')
         else:
             # print('Connection failed, retrying.')
             self.after(1000, self.changePort, serial_port)
@@ -240,7 +240,7 @@ class SerialConsole(customtkinter.CTkFrame):
                 # text = text.replace('\\r', '')
                 # print(text)
                 if text.__contains__('<'):
-                    self.master.updateCNCStatus(text)
+                    self.master.updateSerialDeviceStatus(text)
                 # the response contains '>' but not '<' so ignore it
                 elif text.__contains__('>'):
                     pass

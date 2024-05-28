@@ -5,6 +5,6 @@
     "portlist": [
         "/dev/cu.Bluetooth-Incoming-Port"
     ],
-    "appearance": "Light",
+    "appearance": "Dark",
     "save_folder": ""
 }

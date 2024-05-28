@@ -1,4 +1,5 @@
 import customtkinter as ctk
+import json
 
 import serial_console
 import menu
@@ -33,14 +34,64 @@ class App(ctk.CTk):
         self.menu_frame = menu.Menu(self)
         self.menu_frame.grid(row=0, column=0, rowspan=2, sticky="ns")
 
+        self.serial_console_frame = serial_console.SerialConsole(self)
+        self.serial_console_frame.grid(row=1, column=1, sticky="nsew")
+
+        settings_data = self.loadSettings()
+        self.updateSettings(settings_data)
+
+    def loadSettings(self):
+        settings_data = {}
+        jfile = None
+
+        try:
+            jfile = open('settings.json')
+            settings_data = json.load(jfile)
+        except FileNotFoundError as fnfe:
+            pass
+        if jfile:
+            jfile.close()
+
+        return settings_data
+
+    def updateSettings(self, settings_data: dict):
+        self.settings_data = settings_data
+        serial_line_ending = settings_data.get('lineending')
+        baudrate = settings_data.get('baudrate')
+        serial_port = settings_data.get('port')
+        appearance = settings_data.get('appearance')
+        save_folder = settings_data.get('save_folder')
+
+        # change serial settings
+        self.serial_console_frame.updateSerialSettings(
+            serial_port=serial_port, baudrate=baudrate, line_ending=serial_line_ending)
+
+        # set theme and appearance mode
+        ctk.set_appearance_mode(appearance)
+        ctk.set_default_color_theme("blue")
+
+        # change save folder
+        # TODO: implement save folder change
+
     def sendSettingsData(self):
-        pass
+        return self.settings_data
 
     def saveSettingsOnExit(self):
+        settings_data = self.loadSettings()
+        with open('settings.json', 'w') as jfile:
+            json.dump(settings_data, jfile, indent=4)
+            jfile.close()
+
+    def configureButtons(self, frame: str, buttons: tuple, state: str):
+        # TODO: implement enable/disable buttons when a device is connected/disconnected
+        pass
+
+    def updateSerialDeviceStatus(self, status: str):
+        # TODO: implement this
         pass
 
     def disconnectDevices(self):
-        pass
+        self.serial_console_frame.closePort()
 
     def OnQuitApp(self):
         quit_app = quit_app_window.OnQuitApp(self)

@@ -65,7 +65,7 @@ class SettingsWindow(ctk.CTkToplevel):
 
         # list available serial ports
         self.serial_ports_optionmenu = ctk.CTkOptionMenu(
-            self.settings_frame, values=[])
+            self.settings_frame, values=[], dynamic_resizing=False)
         self.refreshSerialPorts(self.serial_ports_optionmenu)
         self.serial_ports_optionmenu.grid(row=0, column=1, padx=10, pady=10)
 
