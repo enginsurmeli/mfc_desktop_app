@@ -86,7 +86,7 @@ class App(ctk.CTk):
         # TODO: implement enable/disable buttons when a device is connected/disconnected
         pass
 
-    def updateSerialDeviceStatus(self, status: str):
+    def updateDeviceStatus(self, status: str):
         # TODO: implement this
         pass
 
