@@ -55,8 +55,8 @@ class App(ctk.CTk):
         inner_frame_padding = 5
 
         self.menu_frame = sidebar_menu.SidebarMenu(self)
-        self.menu_frame.grid(row=0, column=0, sticky="nsew",
-                             padx=inner_frame_padding, pady=inner_frame_padding)
+        self.menu_frame.grid(row=0, column=0,
+                             padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
 
         self.serial_console_frame = serial_console.SerialConsole(self)
         self.serial_console_frame.grid(
@@ -64,11 +64,11 @@ class App(ctk.CTk):
 
         self.data_display_frame = data_display.DataDisplay(self)
         self.data_display_frame.grid(
-            row=0, column=1, sticky="nsew", padx=inner_frame_padding, pady=inner_frame_padding)
+            row=0, column=1, padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
 
         self.device_control_frame = device_control.DeviceControl(self)
         self.device_control_frame.grid(
-            row=1, column=1, sticky="nsew", padx=inner_frame_padding, pady=inner_frame_padding)
+            row=1, column=1, padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
 
         settings_data = self.loadSettings()
         self.updateSettings(settings_data)

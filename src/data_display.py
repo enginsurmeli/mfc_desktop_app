@@ -8,5 +8,3 @@ import time
 class DataDisplay(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
-        label = ctk.CTkLabel(self, text="Data Display")
-        label.pack()
