@@ -125,16 +125,15 @@ class SerialConsole(customtkinter.CTkFrame):
         return dbs, err
 
     def send(self, event=None, button_command=None):
-        # NOTE: cls, reset and cancel implementations can be simplified in the future. it seems unnecessary to put entrybox delete and return commands in each if statement.
-        if button_command:
+        if button_command:  # if the function is called by a button
             tx_text = button_command
-        else:
+        else:  # if the function is called by the 'Return' key
             tx_text = str(self.tx_entrybox.get())
         lst = len(self.sent_texts)
         if lst > 0 and self.sent_texts[lst-1] != tx_text or lst == 0:
             self.sent_texts.append(tx_text)
         self.sent_texts_index = len(self.sent_texts)
-        if tx_text == '':
+        if tx_text == '':  # do not send empty string
             return
         if tx_text == 'cls' or tx_text == 'clear':  # clear the console
             self.clear()
