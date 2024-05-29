@@ -31,6 +31,7 @@ class LivePlotApp(tk.Tk):
         self.x_data = []
         self.y_data = []
         self.start_time = time.time()
+        self.paused_time = 0
 
         # Start updating the plot
         self.update_plot()
@@ -38,8 +39,11 @@ class LivePlotApp(tk.Tk):
     def toggle_plotting(self):
         if self.plotting.get():
             self.checkbox.config(text="Pause")
+            # Adjust start time to account for the pause duration
+            self.start_time += time.time() - self.paused_time
         else:
             self.checkbox.config(text="Start")
+            self.paused_time = time.time()
 
     def update_plot(self):
         if self.plotting.get():
@@ -60,7 +64,7 @@ class LivePlotApp(tk.Tk):
             self.canvas.draw()
 
         # Call this function again after 100 milliseconds
-        self.after(100, self.update_plot)
+        self.after(10, self.update_plot)
 
 
 if __name__ == "__main__":
