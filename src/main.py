@@ -5,7 +5,9 @@ import sys
 from PIL import ImageTk
 
 import serial_console
-import menu
+import data_display
+import device_control
+import sidebar_menu
 import quit_app_window
 
 
@@ -50,11 +52,23 @@ class App(ctk.CTk):
         self.grid_rowconfigure((0, 1), weight=1)
 
         # create frames
-        self.menu_frame = menu.Menu(self)
-        self.menu_frame.grid(row=0, column=0, sticky="nsew")
+        inner_frame_padding = 5
+
+        self.menu_frame = sidebar_menu.SidebarMenu(self)
+        self.menu_frame.grid(row=0, column=0, sticky="nsew",
+                             padx=inner_frame_padding, pady=inner_frame_padding)
 
         self.serial_console_frame = serial_console.SerialConsole(self)
-        self.serial_console_frame.grid(row=1, column=0, sticky="ns")
+        self.serial_console_frame.grid(
+            row=1, column=0, padx=inner_frame_padding, pady=inner_frame_padding, sticky="s")
+
+        self.data_display_frame = data_display.DataDisplay(self)
+        self.data_display_frame.grid(
+            row=0, column=1, sticky="nsew", padx=inner_frame_padding, pady=inner_frame_padding)
+
+        self.device_control_frame = device_control.DeviceControl(self)
+        self.device_control_frame.grid(
+            row=1, column=1, sticky="nsew", padx=inner_frame_padding, pady=inner_frame_padding)
 
         settings_data = self.loadSettings()
         self.updateSettings(settings_data)

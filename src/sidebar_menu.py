@@ -2,7 +2,7 @@ import customtkinter as ctk
 import settings_window
 
 
-class Menu(ctk.CTkFrame):
+class SidebarMenu(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
