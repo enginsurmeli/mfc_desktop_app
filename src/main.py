@@ -107,8 +107,8 @@ class App(ctk.CTk):
         # change save folder
         # TODO: implement save folder change
 
-    def sendSerialData(self, data: str):
-        self.serial_console_frame.send(data)
+    def sendSerialCommand(self, command: str):
+        self.serial_console_frame.send(button_command=command)
 
     def sendSettingsData(self):
         return self.settings_data
@@ -124,7 +124,7 @@ class App(ctk.CTk):
         pass
 
     def updateDeviceStatus(self, status: str):
-        # TODO: implement this
+        # TODO: implement this to show if the device is connected or not
         pass
 
     def disconnectDevices(self):
