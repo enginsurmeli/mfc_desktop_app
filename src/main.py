@@ -107,6 +107,9 @@ class App(ctk.CTk):
         # change save folder
         # TODO: implement save folder change
 
+    def sendSerialData(self, data: str):
+        self.serial_console_frame.send(data)
+
     def sendSettingsData(self):
         return self.settings_data
 

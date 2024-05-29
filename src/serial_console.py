@@ -124,10 +124,10 @@ class SerialConsole(customtkinter.CTkFrame):
             idx += 1
         return dbs, err
 
-    def send(self, event=None, cnc_command=None):
+    def send(self, event=None, button_command=None):
         # NOTE: cls, reset and cancel implementations can be simplified in the future. it seems unnecessary to put entrybox delete and return commands in each if statement.
-        if cnc_command:
-            tx_text = cnc_command
+        if button_command:
+            tx_text = button_command
         else:
             tx_text = str(self.tx_entrybox.get())
         lst = len(self.sent_texts)
@@ -136,21 +136,9 @@ class SerialConsole(customtkinter.CTkFrame):
         self.sent_texts_index = len(self.sent_texts)
         if tx_text == '':
             return
-        if tx_text == 'cls':
+        if tx_text == 'cls' or tx_text == 'clear':  # clear the console
             self.clear()
             self.tx_entrybox.delete(0, 'end')
-            return
-        if tx_text == 'reset':
-            self.currentPort.write(b'\x18')  # ctrl+x
-            self.tx_entrybox.delete(0, 'end')
-            return
-        if tx_text == 'cancel':
-            self.currentPort.write(b'\x85')  # jog cancel command
-            self.tx_entrybox.delete(0, 'end')
-            return
-        if tx_text == '?':
-            # note: write ? without line ending to not receive a response saying "ok"
-            self.currentPort.write(b'?')
             return
         bs, err = self.decodeEsc(tx_text)
         if err:
@@ -268,10 +256,6 @@ class SerialConsole(customtkinter.CTkFrame):
             self.writeConsole('Serial port closed.\n')
             self.currentPort.port = None
             self.disableSending()
-
-    # def resetConnection(self):
-    #     self.closePort()
-    #     self.changePort(self.currentPort.port)
 
     def configureButtons(self, buttons: tuple, state: str):
         button_dict = {'send_button': self.send_button,
