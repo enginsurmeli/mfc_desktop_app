@@ -1,5 +1,5 @@
 {
-    "lineending": "CR",
+    "lineending": "LF",
     "baudrate": "115200",
     "port": "/dev/cu.usbserial-120",
     "portlist": [
