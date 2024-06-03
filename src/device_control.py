@@ -1,7 +1,7 @@
-import customtkinter as ctk
+from customtkinter import *
 
 
-class DeviceControl(ctk.CTkFrame):
+class DeviceControl(CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
@@ -13,7 +13,7 @@ class DeviceControl(ctk.CTkFrame):
         self.spinbox.grid(row=0, column=0)
 
 
-class Spinbox(ctk.CTkFrame):
+class Spinbox(CTkFrame):
     def __init__(self, *args,
                  label: str = "Spinbox",
                  step_size: float = 1,
@@ -33,22 +33,22 @@ class Spinbox(ctk.CTkFrame):
 
         validation = self.register(self.only_numbers)
 
-        self.label = ctk.CTkLabel(self, text=label)
+        self.label = CTkLabel(self, text=label)
         self.label.grid(row=0, column=0, rowspan=2, padx=3, pady=3)
 
-        self.entrybox = ctk.CTkEntry(
+        self.entrybox = CTkEntry(
             self, width=50, border_width=0, validate="key", validatecommand=(validation, '%P'))
         self.entrybox.grid(row=0, column=1, rowspan=2,
                            padx=3, pady=3, sticky="nsew")
 
         increment_button_height = self.entrybox.winfo_reqheight() - 5
 
-        self.add_button = ctk.CTkButton(self, text="+", width=increment_button_height, height=increment_button_height,
-                                        command=lambda: self.increment_callback('add'))
+        self.add_button = CTkButton(self, text="+", width=increment_button_height, height=increment_button_height,
+                                    command=lambda: self.increment_callback('add'))
         self.add_button.grid(row=0, column=2)
 
-        self.subtract_button = ctk.CTkButton(self, text="-", width=increment_button_height, height=increment_button_height,
-                                             command=lambda: self.increment_callback('subtract'))
+        self.subtract_button = CTkButton(self, text="-", width=increment_button_height, height=increment_button_height,
+                                         command=lambda: self.increment_callback('subtract'))
         self.subtract_button.grid(row=1, column=2)
 
         # default value

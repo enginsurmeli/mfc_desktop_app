@@ -1,11 +1,11 @@
-import customtkinter as ctk
+from customtkinter import *
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 import time
 
 
-class DataDisplay(ctk.CTkFrame):
+class DataDisplay(CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
@@ -15,8 +15,8 @@ class DataDisplay(ctk.CTkFrame):
         self.grid_columnconfigure(0, weight=1)
 
     #     # Checkbox to start/pause data logging
-    #     self.plotting = ctk.BooleanVar(value=False)
-    #     self.checkbox = ctk.CTkCheckBox(
+    #     self.plotting = BooleanVar(value=False)
+    #     self.checkbox = CTkCheckBox(
     #         self, text="Start Data Log", variable=self.plotting, command=self.toggle_plotting)
     #     self.checkbox.grid(row=0, column=0)
 

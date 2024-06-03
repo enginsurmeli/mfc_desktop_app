@@ -1,4 +1,4 @@
-import customtkinter as ctk
+from customtkinter import *
 import json
 import os
 import sys
@@ -11,7 +11,7 @@ import sidebar_menu
 import quit_app_window
 
 
-class App(ctk.CTk):
+class App(CTk):
 
     def __init__(self):
         super().__init__()
@@ -101,8 +101,8 @@ class App(ctk.CTk):
             serial_port=serial_port, baudrate=baudrate, line_ending=serial_line_ending)
 
         # set theme and appearance mode
-        ctk.set_appearance_mode(appearance)
-        ctk.set_default_color_theme("blue")
+        set_appearance_mode(appearance)
+        set_default_color_theme("blue")
 
         # change save folder
         # TODO: implement save folder change

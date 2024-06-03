@@ -1,4 +1,4 @@
-import customtkinter
+from customtkinter import *
 from PIL import Image
 
 import os
@@ -7,7 +7,7 @@ import time
 import serial
 
 
-class SerialConsole(customtkinter.CTkFrame):
+class SerialConsole(CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
@@ -19,36 +19,36 @@ class SerialConsole(customtkinter.CTkFrame):
         self.sent_texts_index = 0
 
         icons_folder = os.path.join(os.getcwd(), 'src', 'icons')
-        send_button_icon = customtkinter.CTkImage(light_image=Image.open(os.path.join(icons_folder, "send_button_light.png")),
-                                                  dark_image=Image.open(os.path.join(
-                                                      icons_folder, "send_button_dark.png")),
-                                                  size=(20, 20))
-        clear_button_icon = customtkinter.CTkImage(light_image=Image.open(os.path.join(icons_folder, "clear_button_light.png")),
-                                                   dark_image=Image.open(os.path.join(
-                                                       icons_folder, "clear_button_dark.png")),
-                                                   size=(20, 20))
+        send_button_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder, "send_button_light.png")),
+                                    dark_image=Image.open(os.path.join(
+                                        icons_folder, "send_button_dark.png")),
+                                    size=(20, 20))
+        clear_button_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder, "clear_button_light.png")),
+                                     dark_image=Image.open(os.path.join(
+                                         icons_folder, "clear_button_dark.png")),
+                                     size=(20, 20))
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=0)
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure((1, 2), weight=0)
 
-        self.rx_textbox = customtkinter.CTkTextbox(
+        self.rx_textbox = CTkTextbox(
             self, bg_color='#343638', state="disabled", wrap="word", border_width=2, corner_radius=0, height=150)
         self.rx_textbox.grid(row=0, column=0, columnspan=3,
                              padx=5, pady=5, sticky="nsew")
 
-        self.tx_entrybox = customtkinter.CTkEntry(
+        self.tx_entrybox = CTkEntry(
             self, border_width=2, corner_radius=0)
         self.tx_entrybox.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
         self.tx_entrybox.bind('<Up>', self.upKeyCmd)
         self.tx_entrybox.bind('<Down>', self.downKeyCmd)
 
-        self.clear_button = customtkinter.CTkButton(
+        self.clear_button = CTkButton(
             self, text="", command=self.clear, width=5, height=5, image=clear_button_icon)
         self.clear_button.grid(row=1, column=2, padx=2.5, pady=5)
 
-        self.send_button = customtkinter.CTkButton(
+        self.send_button = CTkButton(
             self, text="", command=self.send, width=5, height=5, image=send_button_icon)
         self.send_button.grid(row=1, column=1, padx=5, pady=5)
 
