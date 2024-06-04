@@ -27,36 +27,39 @@ class Spinbox(CTkFrame):
         self.max_value = max_value
         self.decimal_places = decimal_places
 
-        self.grid_columnconfigure((0, 1, 3), weight=1)
-        self.grid_columnconfigure(2, weight=0)
-        self.grid_rowconfigure((0, 1), weight=0)
+        self.grid_rowconfigure(0, weight=0)
+        self.grid_columnconfigure((0, 2), weight=0)
+        self.grid_columnconfigure(1, weight=1)
 
         validation = self.register(self.only_numbers)
 
         self.label = CTkLabel(self, text=label)
-        self.label.grid(row=0, column=0, rowspan=2, padx=3, pady=3)
+        self.label.grid(row=0, column=0, padx=3, pady=3)
 
         self.entrybox = CTkEntry(
             self, width=50, border_width=0, validate="key", validatecommand=(validation, '%P'))
-        self.entrybox.grid(row=0, column=1, rowspan=2,
-                           padx=3, pady=3, sticky="nsew")
+        self.entrybox.grid(row=0, column=1, padx=3, pady=3, sticky="nsew")
 
-        increment_button_height = self.entrybox.winfo_reqheight() - 5
+        self.set_button = CTkButton(
+            self, width=10, text="Set", command=lambda: self.focusOutEvent(None))
+        self.set_button.grid(row=0, column=2, padx=3, pady=3)
 
-        self.add_button = CTkButton(self, text="+", width=increment_button_height, height=increment_button_height,
-                                    command=lambda: self.increment_callback('add'))
-        self.add_button.grid(row=0, column=2)
+        # increment_button_height = self.entrybox.winfo_reqheight() - 5
 
-        self.subtract_button = CTkButton(self, text="-", width=increment_button_height, height=increment_button_height,
-                                         command=lambda: self.increment_callback('subtract'))
-        self.subtract_button.grid(row=1, column=2)
+        # self.add_button = CTkButton(self, text="+", width=increment_button_height, height=increment_button_height,
+        #                             command=lambda: self.increment_callback('add'))
+        # self.add_button.grid(row=0, column=2)
+
+        # self.subtract_button = CTkButton(self, text="-", width=increment_button_height, height=increment_button_height,
+        #                                  command=lambda: self.increment_callback('subtract'))
+        # self.subtract_button.grid(row=1, column=2)
 
         # default value
         self.entrybox.insert(0, "0")
         # Bind all elements on mousewheel and keyboard events
         self.entrybox.bind("<MouseWheel>", self.on_mouse_wheel)
-        self.subtract_button.bind("<MouseWheel>", self.on_mouse_wheel)
-        self.add_button.bind("<MouseWheel>", self.on_mouse_wheel)
+        # self.subtract_button.bind("<MouseWheel>", self.on_mouse_wheel)
+        # self.add_button.bind("<MouseWheel>", self.on_mouse_wheel)
         self.bind("<MouseWheel>", self.on_mouse_wheel)
 
         self.entrybox.bind("<Up>", lambda e: self.increment_callback('add'))
