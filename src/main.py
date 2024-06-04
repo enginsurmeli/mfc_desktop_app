@@ -4,10 +4,8 @@ import os
 import sys
 from PIL import ImageTk
 
-import serial_console
-import data_display
-import device_control
 import sidebar_menu
+import dashboard
 import quit_app_window
 
 
@@ -24,7 +22,7 @@ class App(CTk):
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         app_window_width = 1100
-        app_window_height = 580
+        app_window_height = 600
         self.geometry(
             f"{app_window_width}x{app_window_height}+{int(screen_width/2-app_window_width/2)}+{int(screen_height/2-app_window_height/2)}")
         self.minsize(app_window_width, app_window_height)
@@ -47,29 +45,20 @@ class App(CTk):
             pass
 
         # configure grid layout
-        self.grid_columnconfigure(0, weight=0)
-        self.grid_columnconfigure((1), weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=10)
         self.grid_rowconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=0)
 
         # create frames
-        inner_frame_padding = 5
+        inner_frame_padding = 0
 
-        self.menu_frame = sidebar_menu.SidebarMenu(self)
-        self.menu_frame.grid(row=0, column=0,
-                             padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
+        self.sidebar_menu_frame = sidebar_menu.SidebarMenu(self)
+        self.sidebar_menu_frame.grid(row=0, column=0,
+                                     padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
 
-        self.serial_console_frame = serial_console.SerialConsole(self)
-        self.serial_console_frame.grid(
-            row=1, column=0, padx=inner_frame_padding, pady=inner_frame_padding, sticky="s")
-
-        self.data_display_frame = data_display.DataDisplay(self)
-        self.data_display_frame.grid(
-            row=0, column=1, padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
-
-        self.device_control_frame = device_control.DeviceControl(self)
-        self.device_control_frame.grid(
-            row=1, column=1, padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
+        self.dashboard_frame = dashboard.Dashboard(self)
+        self.dashboard_frame.grid(row=0, column=1,
+                                  padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
 
         settings_data = self.loadSettings()
         self.updateSettings(settings_data)
@@ -96,9 +85,9 @@ class App(CTk):
         appearance = settings_data.get('appearance')
         save_folder = settings_data.get('save_folder')
 
-        # change serial settings
-        self.serial_console_frame.updateSerialSettings(
-            serial_port=serial_port, baudrate=baudrate, line_ending=serial_line_ending)
+        # # change serial settings
+        # self.serial_console_frame.updateSerialSettings(
+        #     serial_port=serial_port, baudrate=baudrate, line_ending=serial_line_ending)
 
         # set theme and appearance mode
         set_appearance_mode(appearance)
@@ -107,8 +96,8 @@ class App(CTk):
         # change save folder
         # TODO: implement save folder change
 
-    def sendSerialCommand(self, command: str):
-        self.serial_console_frame.send(button_command=command)
+    # def sendSerialCommand(self, command: str):
+    #     self.serial_console_frame.send(button_command=command)
 
     def sendSettingsData(self):
         return self.settings_data
@@ -128,7 +117,8 @@ class App(CTk):
         pass
 
     def disconnectDevices(self):
-        self.serial_console_frame.closePort()
+        # self.serial_console_frame.closePort()
+        pass
 
     def OnQuitApp(self):
         quit_app = quit_app_window.OnQuitApp(self)
