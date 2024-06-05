@@ -37,10 +37,10 @@ class App(CTk):
 
         try:
             # self.iconbitmap(os.path.join(self.image_path, "microscope_logo.ico"))
-            iconpath = ImageTk.PhotoImage(file=os.path.join(
-                self.image_path, "app_logo.png"))
+            self.iconpath = os.path.join(self.image_path, "app_logo.png")
+            icon = ImageTk.PhotoImage(file=self.iconpath)
             self.wm_iconbitmap()
-            self.after(300, lambda: self.iconphoto(False, iconpath))
+            self.after(300, lambda: self.iconphoto(False, icon))
         except:
             pass
 
@@ -52,7 +52,8 @@ class App(CTk):
         # create frames
         inner_frame_padding = 0
 
-        self.sidebar_menu_frame = sidebar_menu.SidebarMenu(self)
+        self.sidebar_menu_frame = sidebar_menu.SidebarMenu(
+            self, logo=self.iconpath)
         self.sidebar_menu_frame.grid(row=0, column=0,
                                      padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
 

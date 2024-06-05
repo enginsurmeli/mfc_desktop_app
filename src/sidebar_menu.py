@@ -1,8 +1,9 @@
-import customtkinter as ctk
+from customtkinter import *
 import settings_window
+from PIL import Image
 
 
-class SidebarMenu(ctk.CTkFrame):
+class SidebarMenu(CTkFrame):
     def __init__(self, master, logo):
         super().__init__(master)
 
@@ -12,7 +13,12 @@ class SidebarMenu(ctk.CTkFrame):
 
         inner_frame_padding = 5
 
-        settings_button = ctk.CTkButton(
+        logo_img = CTkImage(
+            dark_image=Image.open(logo), light_image=Image.open(logo), size=(77.68, 85.42))
+        logo_label = CTkLabel(self, text="", image=logo_img).pack(
+            pady=(38, 0), anchor="center")
+
+        settings_button = CTkButton(
             self, text="Settings", font=("Arial Bold", 14), command=self.openSettings)
         # settings_button.grid(
         #     row=0, column=0, padx=inner_frame_padding, pady=inner_frame_padding)
