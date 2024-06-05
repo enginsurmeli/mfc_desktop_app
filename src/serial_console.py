@@ -1,14 +1,10 @@
 from customtkinter import *
 from PIL import Image
-
-import os
-import time
-
 import serial
 
 
 class SerialConsole(CTkFrame):
-    def __init__(self, master):
+    def __init__(self, master, icons_folder_path):
         super().__init__(master)
 
         self.master = master
@@ -18,14 +14,13 @@ class SerialConsole(CTkFrame):
         self.sent_texts = []
         self.sent_texts_index = 0
 
-        icons_folder = os.path.join(os.getcwd(), 'src', 'icons')
-        send_button_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder, "send_button_light.png")),
+        send_button_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "send_button_light.png")),
                                     dark_image=Image.open(os.path.join(
-                                        icons_folder, "send_button_dark.png")),
+                                        icons_folder_path, "send_button_dark.png")),
                                     size=(20, 20))
-        clear_button_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder, "clear_button_light.png")),
+        clear_button_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "clear_button_light.png")),
                                      dark_image=Image.open(os.path.join(
-                                         icons_folder, "clear_button_dark.png")),
+                                         icons_folder_path, "clear_button_dark.png")),
                                      size=(20, 20))
 
         self.grid_rowconfigure(0, weight=1)

@@ -6,6 +6,6 @@
         "/dev/cu.Bluetooth-Incoming-Port",
         "/dev/cu.usbserial-120"
     ],
-    "appearance": "Dark",
+    "appearance": "Light",
     "save_folder": ""
 }

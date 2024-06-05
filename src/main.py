@@ -28,17 +28,15 @@ class App(CTk):
         self.minsize(app_window_width, app_window_height)
         self.grab_set()
 
-        # load app icon
-        self.current_folder = os.getcwd()
-        # self.current_folder = globals()['_dh'][0] # Use this for jupyter notebook
-        self.filename = sys.argv[0].rsplit('.', 1)[0]
-        icons_folder = os.path.join('src', 'icons')
-        self.image_path = os.path.join(self.current_folder, icons_folder)
+        self.icons_folder_path = os.path.join(
+            os.getcwd(), 'src', 'icons')
 
+        # load app icon
         try:
-            # self.iconbitmap(os.path.join(self.image_path, "microscope_logo.ico"))
-            self.iconpath = os.path.join(self.image_path, "app_logo.png")
-            icon = ImageTk.PhotoImage(file=self.iconpath)
+            # self.iconbitmap(os.path.join(self.icons_folder_path, "microscope_logo.ico"))
+            iconpath = os.path.join(
+                self.icons_folder_path, "app_logo_light.png")
+            icon = ImageTk.PhotoImage(file=iconpath)
             self.wm_iconbitmap()
             self.after(300, lambda: self.iconphoto(False, icon))
         except:
@@ -53,7 +51,7 @@ class App(CTk):
         inner_frame_padding = 0
 
         self.sidebar_menu_frame = sidebar_menu.SidebarMenu(
-            self, logo=self.iconpath)
+            self, icons_folder_path=self.icons_folder_path)
         self.sidebar_menu_frame.grid(row=0, column=0,
                                      padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
 
