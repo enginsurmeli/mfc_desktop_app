@@ -14,7 +14,7 @@ class SidebarMenu(CTkFrame):
         inner_frame_padding = 5
 
         logo_img = CTkImage(
-            dark_image=Image.open(logo), light_image=Image.open(logo), size=(77.68, 85.42))
+            dark_image=Image.open(logo), light_image=Image.open(logo), size=(150, 150))
         logo_label = CTkLabel(self, text="", image=logo_img).pack(
             pady=(38, 0), anchor="center")
 
