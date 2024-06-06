@@ -15,7 +15,7 @@ class SidebarMenu(CTkFrame):
         button_font = ("Arial Bold", 16)
 
         logo_img_light = Image.open(os.path.join(
-            icons_folder_path, "app_logo_light.png"))
+            icons_folder_path, "app_logo_dark.png"))
         logo_img_dark = Image.open(os.path.join(
             icons_folder_path, "app_logo_dark.png"))
         logo_img = CTkImage(
@@ -24,29 +24,27 @@ class SidebarMenu(CTkFrame):
         logo_label.pack(pady=(38, 0), anchor="center")
 
         home_button = CTkButton(
-            self, text="Home", font=button_font, command=self.openHome)
+            self, text="Home", font=button_font, command=self.showHome)
         home_button.pack(
             anchor="center", pady=(60, 0))
 
         devices_button = CTkButton(
-            self, text="Devices", font=button_font, command=self.openDevices)
+            self, text="Devices", font=button_font, command=self.showDevices)
         devices_button.pack(
             anchor="center", pady=(16, 0))
 
         settings_button = CTkButton(
-            self, text="Settings", font=button_font, command=self.openSettings)
+            self, text="Settings", font=button_font, command=self.showSettings)
         settings_button.pack(
             anchor="center", pady=(16, 0))
 
-    def openHome(self):
-        # self.master.dashboard_frame.showTab("Home")
-        pass
+    def showHome(self):
+        self.master.dashboard_frame.showTab("Home")
 
-    def openDevices(self):
-        # self.master.dashboard_frame.showTab("Devices")
-        pass
+    def showDevices(self):
+        self.master.dashboard_frame.showTab("Devices")
 
-    def openSettings(self):
+    def showSettings(self):
         # settings = settings_window.SettingsWindow(
         #     self.master, self.master.sendSettingsData())
-        pass
+        self.master.dashboard_frame.showTab("Settings")

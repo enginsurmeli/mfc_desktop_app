@@ -90,7 +90,7 @@ class App(CTk):
 
         # set theme and appearance mode
         set_appearance_mode(appearance)
-        set_default_color_theme("blue")
+        # set_default_color_theme("blue")
 
         # change save folder
         # TODO: implement save folder change

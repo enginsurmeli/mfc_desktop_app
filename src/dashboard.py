@@ -1,9 +1,12 @@
 from customtkinter import *
+import settings
 
 
 class Dashboard(CTkTabview):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
+
+        self.master = master
 
         # create tabs
         self.add("Home")
@@ -16,4 +19,7 @@ class Dashboard(CTkTabview):
         self._segmented_button.grid_forget()
         self._configure_grid()
 
-        # add widgets on tabs
+        # add frames on tabs
+
+    def showTab(self, tab_name: str):
+        self.set(tab_name)
