@@ -1,44 +1,35 @@
-import customtkinter as ctk
+from customtkinter import *
 import serial.tools.list_ports
 import tkinter.ttk as ttk
 from tkinter import filedialog
 import json
 
 
-class SettingsWindow(ctk.CTkToplevel):
+class SettingsFrame(CTkFrame):
     def __init__(self, master, settings_data: dict):
         super().__init__(master)
 
         self.master = master
         self.settings_data = settings_data
 
-        app_window_width = master.winfo_width()
-        app_window_height = master.winfo_height()
-        app_window_x = master.winfo_x()
-        app_window_y = master.winfo_y()
-        settings_window_width = 600
-        settings_window_height = 340
-        self.geometry(
-            f"{settings_window_width}x{settings_window_height}+{app_window_x+app_window_width//2-settings_window_width//2}+{app_window_y+app_window_height//2-settings_window_height//2}")
-        self.resizable(False, False)
-        self.title("Settings")
-        self.deiconify()
-        self.grab_set()
-
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=0)
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure((1, 2), weight=0)
 
-        ok_button = ctk.CTkButton(
+        ok_button = CTkButton(
             self, text="OK", command=self.apply_settings)
         ok_button.grid(row=1, column=1, padx=10, pady=10)
 
-        cancel_button = ctk.CTkButton(
+        cancel_button = CTkButton(
             self, text="Cancel", command=self.destroy)
         cancel_button.grid(row=1, column=2, padx=10, pady=10)
 
-        self.settings_frame = ctk.CTkFrame(self)
+        apply_button = CTkButton(
+            self, text="Apply", command=self.apply_settings)
+        apply_button.grid(row=1, column=3, padx=10, pady=10)
+
+        self.settings_frame = CTkFrame(self)
         self.settings_frame.grid(
             row=0, column=0, columnspan=3, padx=10, pady=10)
 
@@ -46,56 +37,56 @@ class SettingsWindow(ctk.CTkToplevel):
         self.settings_frame.grid_columnconfigure((0, 1, 2, 3), weight=0)
 
         # create labels and separators
-        serial_port_label = ctk.CTkLabel(
+        serial_port_label = CTkLabel(
             self.settings_frame, text="Serial Port")
         serial_port_label.grid(row=0, column=0, padx=10, pady=10)
         separator_1 = ttk.Separator(
             self.settings_frame, orient="horizontal")
         separator_1.grid(row=1, column=0, columnspan=4,
                          padx=10, pady=5, sticky="ew")
-        appearance_label = ctk.CTkLabel(
+        appearance_label = CTkLabel(
             self.settings_frame, text="Appearance")
         appearance_label.grid(row=4, column=0, padx=10, pady=10)
         separator_2 = ttk.Separator(self.settings_frame, orient="horizontal")
         separator_2.grid(row=5, column=0, columnspan=4,
                          padx=10, pady=5, sticky="ew")
-        save_folder_label = ctk.CTkLabel(
+        save_folder_label = CTkLabel(
             self.settings_frame, text="Save Location")
         save_folder_label.grid(row=6, column=0, padx=10, pady=10)
 
         # list available serial ports
-        self.serial_ports_optionmenu = ctk.CTkOptionMenu(
+        self.serial_ports_optionmenu = CTkOptionMenu(
             self.settings_frame, values=[], dynamic_resizing=False)
         self.refreshSerialPorts(self.serial_ports_optionmenu)
         self.serial_ports_optionmenu.grid(row=0, column=1, padx=10, pady=10)
 
         # create a list of baud rates
         baud_rates = ["9600", "19200", "38400", "57600", "115200"]
-        self.baud_rates_optionmenu = ctk.CTkOptionMenu(
+        self.baud_rates_optionmenu = CTkOptionMenu(
             self.settings_frame, values=baud_rates)
         self.baud_rates_optionmenu.grid(row=0, column=2, padx=10, pady=10)
 
         # create a list of line endings
         line_endings = ["None", "CR", "LF", "Both CR&LF"]
-        self.line_endings_optionmenu = ctk.CTkOptionMenu(
+        self.line_endings_optionmenu = CTkOptionMenu(
             self.settings_frame, values=line_endings)
         self.line_endings_optionmenu.grid(row=0, column=3, padx=10, pady=10)
 
         # create a list of appearance modes and accent colors
-        self.appearance_optionmenu = ctk.CTkOptionMenu(
+        self.appearance_optionmenu = CTkOptionMenu(
             self.settings_frame, values=["Light", "Dark", "System"])
         self.appearance_optionmenu.grid(row=4, column=1, padx=10, pady=10)
 
-        # self.accent_color_option = ctk.CTkOptionMenu(
+        # self.accent_color_option = CTkOptionMenu(
         #     self.settings_frame, values=["blue", "green", "dark-blue"])
         # self.accent_color_option.grid(row=4, column=2, padx=10, pady=10)
 
         # entrybox for save data path
-        self.save_folder_entry = ctk.CTkEntry(self.settings_frame)
+        self.save_folder_entry = CTkEntry(self.settings_frame)
         self.save_folder_entry.grid(
             row=6, column=1, columnspan=2, padx=10, pady=10, sticky="ew")
 
-        self.select_folder_button = ctk.CTkButton(
+        self.select_folder_button = CTkButton(
             self.settings_frame, text="Select Folder", command=self.select_folder)
         self.select_folder_button.grid(row=6, column=3, padx=10, pady=10)
 
@@ -117,7 +108,7 @@ class SettingsWindow(ctk.CTkToplevel):
         self.after(1000, self.refreshSerialPorts, serial_ports_optionmenu)
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
-        ctk.set_appearance_mode(new_appearance_mode)
+        set_appearance_mode(new_appearance_mode)
 
     def apply_settings(self):
 
