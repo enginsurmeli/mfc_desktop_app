@@ -42,6 +42,9 @@ class App(CTk):
         except:
             pass
 
+        settings_data = self.loadSettings()
+        self.applySettings(settings_data)
+
         # configure grid layout
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=10)
@@ -59,9 +62,6 @@ class App(CTk):
         self.dashboard_frame.grid(row=0, column=1,
                                   padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
 
-        settings_data = self.loadSettings()
-        self.updateSettings(settings_data)
-
     def loadSettings(self):
         settings_data = {}
         jfile = None
@@ -76,7 +76,7 @@ class App(CTk):
 
         return settings_data
 
-    def updateSettings(self, settings_data: dict):
+    def applySettings(self, settings_data: dict):
         self.settings_data = settings_data
         serial_line_ending = settings_data.get('lineending')
         baudrate = settings_data.get('baudrate')

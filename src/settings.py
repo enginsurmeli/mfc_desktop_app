@@ -6,10 +6,10 @@ import json
 
 
 class SettingsFrame(CTkFrame):
-    def __init__(self, master):
+    def __init__(self, parent, master):
         super().__init__(master)
 
-        self.master = master
+        self.parent = parent
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=0)
@@ -25,7 +25,7 @@ class SettingsFrame(CTkFrame):
         cancel_button.grid(row=1, column=2, padx=10, pady=10)
 
         apply_button = CTkButton(
-            self, text="Apply", command=self.applySettings)
+            self, text="Apply", command=self.saveSettingsandApply)
         apply_button.grid(row=1, column=3, padx=10, pady=10)
         # TODO: activate apply button onlt if changes are made
 
@@ -143,7 +143,7 @@ class SettingsFrame(CTkFrame):
         self.setCurrentSettings()
 
     def setCurrentSettings(self):
-        settings_data = self.master.sendSettingsData()
+        settings_data = self.parent.sendSettingsData()
         self.serial_ports_optionmenu.set(settings_data.get('port'))
         self.baud_rates_optionmenu.set(settings_data.get('baudrate'))
         self.line_endings_optionmenu.set(settings_data.get('lineending'))
@@ -161,7 +161,7 @@ class SettingsFrame(CTkFrame):
     # def changeAppearanceMode(self, new_appearance_mode: str):
     #     set_appearance_mode(new_appearance_mode)
 
-    def applySettings(self):
+    def saveSettingsandApply(self):
 
         # get serial port, baud rate and line ending
         serial_port = self.serial_ports_optionmenu.get()
@@ -182,17 +182,17 @@ class SettingsFrame(CTkFrame):
         with open('settings.json', 'w') as jfile:
             json.dump(settings_data, jfile, indent=4)
             jfile.close()
-        self.master.updateSettings(settings_data)
+        self.parent.applySettings(settings_data)
 
     def applyAndReturn(self):
         # apply changes and return to home tab
-        self.applySettings()
-        self.master.showTab("Home")
+        self.saveSettingsandApply()
+        self.parent.showTab("Home")
 
     def revertSettings(self):
         # cancel changes and return to home tab
-        # self.setCurrentSettings()
-        self.master.showTab("Home")
+        self.setCurrentSettings()
+        self.parent.showTab("Home")
 
     def selectFolder(self):
         folder = filedialog.askdirectory()

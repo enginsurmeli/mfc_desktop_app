@@ -3,8 +3,7 @@
     "baudrate": "115200",
     "port": "/dev/cu.usbserial-120",
     "portlist": [
-        "/dev/cu.Bluetooth-Incoming-Port",
-        "/dev/cu.usbserial-120"
+        "/dev/cu.Bluetooth-Incoming-Port"
     ],
     "appearance": "Dark",
     "save_folder": ""

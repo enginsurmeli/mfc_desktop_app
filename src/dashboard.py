@@ -1,5 +1,6 @@
 from customtkinter import *
 import settings
+import json
 
 
 class Dashboard(CTkTabview):
@@ -26,8 +27,12 @@ class Dashboard(CTkTabview):
         devices_frame = CTkFrame(master=self.tab("Devices"))
         devices_frame.pack(fill=BOTH, expand=True)
 
-        # settings_frame = settings.SettingsFrame(master=self.tab("Settings"))
-        # settings_frame.pack(fill=BOTH, expand=True)
+        settings_frame = settings.SettingsFrame(
+            parent=self, master=self.tab("Settings"))
+        settings_frame.pack(fill=BOTH, expand=True)
 
     def showTab(self, tab_name: str):
         self.set(tab_name)
+
+    def sendSettingsData(self):
+        return self.master.sendSettingsData()
