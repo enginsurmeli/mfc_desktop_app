@@ -33,59 +33,6 @@ class SettingsFrame(CTkFrame):
         self.settings_frame.grid(
             row=0, column=0, columnspan=3, padx=10, pady=10)
 
-        # self.settings_frame.grid_rowconfigure((0, 1, 2, 3, 4, 5, 6), weight=0)
-        # self.settings_frame.grid_columnconfigure((0, 1, 2, 3), weight=0)
-
-        # # create labels and separators
-        # serial_port_label = CTkLabel(
-        #     self.settings_frame, text="Serial Port")
-        # serial_port_label.grid(row=0, column=0, padx=10, pady=10)
-        # separator_1 = ttk.Separator(
-        #     self.settings_frame, orient="horizontal")
-        # separator_1.grid(row=1, column=0, columnspan=4,
-        #                  padx=10, pady=5, sticky="ew")
-        # appearance_label = CTkLabel(
-        #     self.settings_frame, text="Appearance")
-        # appearance_label.grid(row=4, column=0, padx=10, pady=10)
-        # separator_2 = ttk.Separator(self.settings_frame, orient="horizontal")
-        # separator_2.grid(row=5, column=0, columnspan=4,
-        #                  padx=10, pady=5, sticky="ew")
-        # save_folder_label = CTkLabel(
-        #     self.settings_frame, text="Save Location")
-        # save_folder_label.grid(row=6, column=0, padx=10, pady=10)
-
-        # # list available serial ports
-        # self.serial_ports_optionmenu = CTkOptionMenu(
-        #     self.settings_frame, values=[], dynamic_resizing=False)
-        # self.refreshSerialPorts(self.serial_ports_optionmenu)
-        # self.serial_ports_optionmenu.grid(row=0, column=1, padx=10, pady=10)
-
-        # # create a list of baud rates
-        # baud_rates = ["9600", "19200", "38400", "57600", "115200"]
-        # self.baud_rates_optionmenu = CTkOptionMenu(
-        #     self.settings_frame, values=baud_rates)
-        # self.baud_rates_optionmenu.grid(row=0, column=2, padx=10, pady=10)
-
-        # # create a list of line endings
-        # line_endings = ["None", "CR", "LF", "Both CR&LF"]
-        # self.line_endings_optionmenu = CTkOptionMenu(
-        #     self.settings_frame, values=line_endings)
-        # self.line_endings_optionmenu.grid(row=0, column=3, padx=10, pady=10)
-
-        # # create a list of appearance modes and accent colors
-        # self.appearance_optionmenu = CTkOptionMenu(
-        #     self.settings_frame, values=["Light", "Dark", "System"])
-        # self.appearance_optionmenu.grid(row=4, column=1, padx=10, pady=10)
-
-        # # entrybox for save data path
-        # self.save_folder_entry = CTkEntry(self.settings_frame)
-        # self.save_folder_entry.grid(
-        #     row=6, column=1, columnspan=2, padx=10, pady=10, sticky="ew")
-
-        # self.selectFolder_button = CTkButton(
-        #     self.settings_frame, text="Select Folder", command=self.selectFolder)
-        # self.selectFolder_button.grid(row=6, column=3, padx=10, pady=10)
-
         # Frame for serial port settings
         serial_port_frame = CTkFrame(self.settings_frame)
         serial_port_frame.pack(fill="x", padx=10, pady=5)
