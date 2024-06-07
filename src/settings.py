@@ -6,11 +6,10 @@ import json
 
 
 class SettingsFrame(CTkFrame):
-    def __init__(self, master, settings_data: dict):
+    def __init__(self, master):
         super().__init__(master)
 
         self.master = master
-        self.settings_data = settings_data
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=0)
@@ -144,12 +143,13 @@ class SettingsFrame(CTkFrame):
         self.setCurrentSettings()
 
     def setCurrentSettings(self):
-        self.serial_ports_optionmenu.set(self.settings_data.get('port'))
-        self.baud_rates_optionmenu.set(self.settings_data.get('baudrate'))
-        self.line_endings_optionmenu.set(self.settings_data.get('lineending'))
-        self.appearance_optionmenu.set(self.settings_data.get('appearance'))
+        settings_data = self.master.sendSettingsData()
+        self.serial_ports_optionmenu.set(settings_data.get('port'))
+        self.baud_rates_optionmenu.set(settings_data.get('baudrate'))
+        self.line_endings_optionmenu.set(settings_data.get('lineending'))
+        self.appearance_optionmenu.set(settings_data.get('appearance'))
         self.save_folder_entry.delete(0, "end")
-        self.save_folder_entry.insert(0, self.settings_data.get('save_folder'))
+        self.save_folder_entry.insert(0, settings_data.get('save_folder'))
 
     def refreshSerialPorts(self, serial_ports_optionmenu):
         # refresh available serial ports and cameras every 1 second

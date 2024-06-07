@@ -1,7 +1,6 @@
 from customtkinter import *
 from PIL import Image
 import os
-import sys
 
 
 class SidebarMenu(CTkFrame):
@@ -45,6 +44,4 @@ class SidebarMenu(CTkFrame):
         self.master.dashboard_frame.showTab("Devices")
 
     def showSettings(self):
-        # settings = settings_window.SettingsWindow(
-        #     self.master, self.master.sendSettingsData())
         self.master.dashboard_frame.showTab("Settings")

@@ -120,7 +120,7 @@ class App(CTk):
         pass
 
     def OnQuitApp(self):
-        quit_app = quit_app_window.OnQuitApp(self)
+        quit_app_window.OnQuitApp(self)
 
 
 if __name__ == "__main__":
