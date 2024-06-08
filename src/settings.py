@@ -17,16 +17,16 @@ class SettingsFrame(CTkFrame):
         self.grid_columnconfigure((1, 2, 3), weight=0)
 
         ok_button = CTkButton(
-            self, text="OK", command=self.applyAndReturn)
-        ok_button.grid(row=1, column=1, padx=10, pady=10)
+            self, text="OK", command=self.applyAndReturn, width=80, state="disabled")
+        ok_button.grid(row=1, column=1, padx=0, pady=(0, 10))
 
         cancel_button = CTkButton(
-            self, text="Cancel", command=self.revertSettings)
-        cancel_button.grid(row=1, column=2, padx=10, pady=10)
+            self, text="Cancel", command=self.revertSettings, width=80)
+        cancel_button.grid(row=1, column=2, padx=10, pady=(0, 10))
 
         apply_button = CTkButton(
-            self, text="Apply", command=self.saveSettingsandApply)
-        apply_button.grid(row=1, column=3, padx=10, pady=10)
+            self, text="Apply", command=self.saveSettingsandApply, width=80, state="disabled")
+        apply_button.grid(row=1, column=3, padx=(0, 10), pady=(0, 10))
         # TODO: activate apply button onlt if changes are made
 
         self.settings_frame = CTkFrame(self)
