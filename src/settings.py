@@ -16,18 +16,22 @@ class SettingsFrame(CTkFrame):
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure((1, 2, 3), weight=0)
 
-        ok_button = CTkButton(
+        self.ok_button = CTkButton(
             self, text="OK", command=self.applyAndReturn, width=80, state="disabled")
-        ok_button.grid(row=1, column=1, padx=0, pady=(0, 10))
+        self.ok_button.grid(row=1, column=1, padx=0, pady=(0, 10))
 
-        cancel_button = CTkButton(
+        self.cancel_button = CTkButton(
             self, text="Cancel", command=self.revertSettings, width=80)
-        cancel_button.grid(row=1, column=2, padx=10, pady=(0, 10))
+        self.cancel_button.grid(row=1, column=2, padx=10, pady=(0, 10))
 
-        apply_button = CTkButton(
+        self.apply_button = CTkButton(
             self, text="Apply", command=self.saveSettingsandApply, width=80, state="disabled")
-        apply_button.grid(row=1, column=3, padx=(0, 10), pady=(0, 10))
+        self.apply_button.grid(row=1, column=3, padx=(0, 10), pady=(0, 10))
         # TODO: activate apply button onlt if changes are made
+
+        # Dictionary to store option menus and their initial values
+        self.option_menus = {}
+        self.option_menu_values = {}
 
         self.settings_frame = CTkFrame(self)
         self.settings_frame.grid(
@@ -40,15 +44,21 @@ class SettingsFrame(CTkFrame):
         serial_port_label = CTkLabel(serial_port_frame, text="Serial Port")
         serial_port_label.pack(side="left", padx=10, pady=10)
 
+        self.serial_ports_var = StringVar()
         self.serial_ports_optionmenu = CTkOptionMenu(
-            serial_port_frame, values=[], dynamic_resizing=False)
+            serial_port_frame, variable=self.serial_ports_var, values=[], dynamic_resizing=False)
         self.refreshSerialPorts(self.serial_ports_optionmenu)
         self.serial_ports_optionmenu.pack(side="left", padx=10, pady=10)
+        self.serial_ports_var.trace_add(
+            "write", lambda name, index, mode: self.onValueChange("Serial Port"))
 
         baud_rates = ["9600", "19200", "38400", "57600", "115200"]
+        self.baud_rates_var = StringVar()
         self.baud_rates_optionmenu = CTkOptionMenu(
-            serial_port_frame, values=baud_rates)
+            serial_port_frame, variable=self.baud_rates_var, values=baud_rates)
         self.baud_rates_optionmenu.pack(side="left", padx=10, pady=10)
+        self.baud_rates_var.trace_add(
+            "write", lambda name, index, mode: self.onValueChange("Baud Rate"))
 
         line_endings = ["None", "CR", "LF", "Both CR&LF"]
         self.line_endings_optionmenu = CTkOptionMenu(
@@ -86,6 +96,12 @@ class SettingsFrame(CTkFrame):
         self.selectFolder_button = CTkButton(
             save_folder_frame, text="Select Folder", command=self.selectFolder)
         self.selectFolder_button.pack(side="left", padx=10, pady=10)
+
+        # Store the option menu and its initial value
+        self.option_menus["Serial Port"] = self.serial_ports_optionmenu
+        self.option_menu_values["Serial Port"] = self.serial_ports_var.get()
+        self.option_menus["Baud Rate"] = self.baud_rates_optionmenu
+        self.option_menu_values["Baud Rate"] = self.baud_rates_var.get()
 
         self.setCurrentSettings()
 
@@ -145,3 +161,12 @@ class SettingsFrame(CTkFrame):
         folder = filedialog.askdirectory()
         self.save_folder_entry.delete(0, "end")
         self.save_folder_entry.insert(0, folder)
+
+    def onValueChange(self, key: str):
+        # detect changes in option menus to activate OK and Apply buttons
+        option_menu = self.option_menus[key]
+        current_value = option_menu.get()
+
+        if current_value != self.option_menu_values[key]:
+            self.ok_button.configure(state="normal")
+            self.apply_button.configure(state="normal")
