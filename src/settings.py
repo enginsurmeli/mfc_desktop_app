@@ -66,6 +66,10 @@ class SettingsFrame(CTkFrame):
             serial_port_frame, values=line_endings)
         self.line_endings_optionmenu.pack(side="left", padx=10, pady=10)
 
+        refresh_serial_ports_button = CTkButton(
+            serial_port_frame, text="⟳", width=30, font=("", 20), command=lambda: self.refreshSerialPorts(self.serial_ports_optionmenu))
+        refresh_serial_ports_button.pack(side="left", padx=10, pady=10)
+
         separator_1 = ttk.Separator(self.settings_frame, orient="horizontal")
         separator_1.pack(fill="x", padx=10, pady=5)
 
