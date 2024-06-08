@@ -1,4 +1,6 @@
 from customtkinter import *
+import home
+import devices
 import settings
 import json
 
@@ -8,6 +10,7 @@ class Dashboard(CTkTabview):
         super().__init__(master, **kwargs)
 
         self.master = master
+        self.configure(width=800)
 
         # create tabs
         self.add("Home")
@@ -21,10 +24,11 @@ class Dashboard(CTkTabview):
         self._configure_grid()
 
         # add frames on tabs
-        home_frame = CTkFrame(master=self.tab("Home"))
+        home_frame = home.HomeFrame(parent=self, master=self.tab("Home"))
         home_frame.pack(fill=BOTH, expand=True)
 
-        devices_frame = CTkFrame(master=self.tab("Devices"))
+        devices_frame = devices.DevicesFrame(
+            parent=self, master=self.tab("Devices"))
         devices_frame.pack(fill=BOTH, expand=True)
 
         settings_frame = settings.SettingsFrame(
@@ -39,3 +43,6 @@ class Dashboard(CTkTabview):
 
     def applySettings(self, settings_data):
         self.master.applySettings(settings_data)
+
+    def getIconsFolderPath(self):
+        return self.master.icons_folder_path
