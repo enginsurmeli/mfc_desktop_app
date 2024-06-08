@@ -31,7 +31,7 @@ class SettingsFrame(CTkFrame):
 
         self.settings_frame = CTkFrame(self)
         self.settings_frame.grid(
-            row=0, column=0, columnspan=3, padx=10, pady=10)
+            row=0, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
 
         # Frame for serial port settings
         serial_port_frame = CTkFrame(self.settings_frame)
