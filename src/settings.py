@@ -47,6 +47,7 @@ class SettingsFrame(CTkFrame):
         self.serial_ports_var = StringVar()
         self.serial_ports_optionmenu = CTkOptionMenu(
             serial_port_frame, variable=self.serial_ports_var, values=[], dynamic_resizing=False)
+        # refresh serial ports once at start
         self.refreshSerialPorts(self.serial_ports_optionmenu)
         self.serial_ports_optionmenu.pack(side="left", padx=10, pady=10)
         self.serial_ports_var.trace_add(
@@ -106,7 +107,7 @@ class SettingsFrame(CTkFrame):
         self.setCurrentSettings()
 
     def setCurrentSettings(self):
-        settings_data = self.parent.sendSettingsData()
+        settings_data = self.parent.getSettingsData()
         self.serial_ports_optionmenu.set(settings_data.get('port'))
         self.baud_rates_optionmenu.set(settings_data.get('baudrate'))
         self.line_endings_optionmenu.set(settings_data.get('lineending'))
@@ -119,7 +120,7 @@ class SettingsFrame(CTkFrame):
         myports = [tuple(p) for p in list(serial.tools.list_ports.comports())]
         self.ports_list = sorted([p[0] for p in myports])
         serial_ports_optionmenu.configure(values=self.ports_list)
-        self.after(1000, self.refreshSerialPorts, serial_ports_optionmenu)
+        # self.after(1000, self.refreshSerialPorts, serial_ports_optionmenu)
 
     # def changeAppearanceMode(self, new_appearance_mode: str):
     #     set_appearance_mode(new_appearance_mode)

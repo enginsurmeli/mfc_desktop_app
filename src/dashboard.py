@@ -34,8 +34,8 @@ class Dashboard(CTkTabview):
     def showTab(self, tab_name: str):
         self.set(tab_name)
 
-    def sendSettingsData(self):
-        return self.master.sendSettingsData()
+    def getSettingsData(self):
+        return self.master.settings_data
 
     def applySettings(self, settings_data):
         self.master.applySettings(settings_data)

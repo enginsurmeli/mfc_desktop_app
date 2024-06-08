@@ -53,8 +53,7 @@ class App(CTk):
         # create frames
         inner_frame_padding = 0
 
-        self.sidebar_menu_frame = sidebar_menu.SidebarMenu(
-            self, icons_folder_path=self.icons_folder_path)
+        self.sidebar_menu_frame = sidebar_menu.SidebarMenu(self)
         self.sidebar_menu_frame.grid(row=0, column=0,
                                      padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
 
@@ -97,9 +96,6 @@ class App(CTk):
 
     # def sendSerialCommand(self, command: str):
     #     self.serial_console_frame.send(button_command=command)
-
-    def sendSettingsData(self):
-        return self.settings_data
 
     def saveSettingsOnExit(self):
         settings_data = self.loadSettings()

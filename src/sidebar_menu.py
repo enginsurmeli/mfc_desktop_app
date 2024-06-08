@@ -4,10 +4,11 @@ import os
 
 
 class SidebarMenu(CTkFrame):
-    def __init__(self, master, icons_folder_path):
+    def __init__(self, master):
         super().__init__(master)
 
         self.master = master
+        icons_folder_path = master.icons_folder_path
         self.configure(fg_color="#1f6ba5")
         self.configure(corner_radius=0)
 

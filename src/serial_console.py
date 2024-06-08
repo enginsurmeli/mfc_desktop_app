@@ -4,10 +4,11 @@ import serial
 
 
 class SerialConsole(CTkFrame):
-    def __init__(self, master, icons_folder_path):
+    def __init__(self, master):
         super().__init__(master)
 
         self.master = master
+        icons_folder_path = master.icons_folder_path
 
         self.currentPort = serial.Serial(
             port=None, baudrate=115200, timeout=0, write_timeout=0)
