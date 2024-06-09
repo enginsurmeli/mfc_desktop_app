@@ -54,12 +54,10 @@ class App(CTk):
         inner_frame_padding = 0
 
         self.sidebar_menu_frame = sidebar_menu.SidebarMenu(self)
-        self.sidebar_menu_frame.grid(row=0, column=0,
-                                     padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
+        self.sidebar_menu_frame.grid(row=0, column=0, sticky="nsew")
 
         self.dashboard_frame = dashboard.Dashboard(self)
-        self.dashboard_frame.grid(row=0, column=1,
-                                  padx=inner_frame_padding, pady=inner_frame_padding, sticky="nsew")
+        self.dashboard_frame.grid(row=0, column=1, sticky="nsew")
 
     def loadSettings(self):
         settings_data = {}

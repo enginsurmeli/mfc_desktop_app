@@ -11,7 +11,7 @@ class SidebarMenu(CTkFrame):
         icons_folder_path = master.icons_folder_path
         self.configure(fg_color="#1f6ba5")
         self.configure(corner_radius=0)
-        self.configure(width=200)
+        self.configure(width=250)
 
         button_font = ("Arial Bold", 22)
 

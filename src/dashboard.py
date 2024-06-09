@@ -10,7 +10,7 @@ class Dashboard(CTkTabview):
         super().__init__(master, **kwargs)
 
         self.master = master
-        self.configure(width=800)
+        self.configure(width=750)
 
         # create tabs
         self.add("Home")
