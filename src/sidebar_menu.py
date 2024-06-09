@@ -13,14 +13,14 @@ class SidebarMenu(CTkFrame):
         self.configure(corner_radius=0)
         self.configure(width=200)
 
-        button_font = ("Arial Bold", 16)
+        button_font = ("Arial Bold", 22)
 
         logo_img_light = Image.open(os.path.join(
             icons_folder_path, "app_logo_dark.png"))
         logo_img_dark = Image.open(os.path.join(
             icons_folder_path, "app_logo_dark.png"))
         logo_img = CTkImage(
-            dark_image=logo_img_light, light_image=logo_img_dark, size=(85, 85))
+            dark_image=logo_img_light, light_image=logo_img_dark, size=(128, 128))
         logo_label = CTkLabel(self, text="", image=logo_img)
         logo_label.pack(pady=(38, 0), anchor="center")
 
