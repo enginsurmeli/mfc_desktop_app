@@ -3,6 +3,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 from PIL import Image
+import tkinter.ttk as ttk
 
 
 class DataDisplay(CTkFrame):
@@ -13,9 +14,11 @@ class DataDisplay(CTkFrame):
         icons_folder_path = master.getIconsFolderPath()
 
         # Load icons
+        button_padding = 5
         figure_padding = 0.03
-        button_size = (90, 35)
-        icon_size = (button_size[1], button_size[1])
+        button_width = 90
+        button_height = 35
+        icon_size = (button_height, button_height)
 
         save_file_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "save_light.png")),
                                   dark_image=Image.open(os.path.join(
@@ -41,7 +44,64 @@ class DataDisplay(CTkFrame):
         plot_frame = CTkFrame(self)
         plot_frame.pack(fill="both", expand=True)
 
-    #     # Checkbox to start/pause data logging
+        # Create toolbar buttons
+        self.start_data_log_var = StringVar(value="Off")
+        self.start_data_log_switch = CTkSwitch(
+            master=toolbar_frame, text="Data Stream", command=self.startDataStream, variable=self.start_data_log_var, onvalue="On", offvalue="Off")
+        self.start_data_log_switch.pack(
+            side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+
+        separator1 = ttk.Separator(
+            toolbar_frame, orient="vertical")
+        separator1.pack(side='left', expand=False,
+                        padx=button_padding, pady=(0, button_padding))
+
+        self.save_file_button = CTkButton(
+            master=toolbar_frame, text="Save", image=save_file_icon, command=self.saveFile, width=button_width, height=button_height)
+        self.save_file_button.pack(
+            side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+
+        self.load_file_button = CTkButton(
+            master=toolbar_frame, text="Open", image=load_file_icon, command=self.loadFile, width=button_width, height=button_height)
+        self.load_file_button.pack(
+            side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+
+        separator2 = ttk.Separator(
+            toolbar_frame, orient="vertical")
+        separator2.pack(side='left', expand=False,
+                        padx=button_padding, pady=(0, button_padding))
+
+        self.export_image_button = CTkButton(
+            master=toolbar_frame, text="Export\nImage", image=export_image_icon, command=self.exportGraphImage, width=button_width, height=button_height)
+        self.export_image_button.pack(
+            side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+
+        separator3 = ttk.Separator(
+            toolbar_frame, orient="vertical")
+        separator3.pack(side='left', expand=False,
+                        padx=button_padding, pady=(0, button_padding))
+
+        self.clear_plot_button = CTkButton(
+            master=toolbar_frame, text="Clear", image=clear_plot_icon, command=self.clearPlot, width=button_width, height=button_height)
+        self.clear_plot_button.pack(
+            side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+
+    def startDataStream(self):
+        pass
+
+    def saveFile(self):
+        pass
+
+    def loadFile(self):
+        pass
+
+    def exportGraphImage(self):
+        pass
+
+    def clearPlot(self):
+        pass
+
+    #     # Checkbox to start/pause data Stream
     #     self.plotting = BooleanVar(value=False)
     #     self.checkbox = CTkCheckBox(
     #         self, text="Start Data Log", variable=self.plotting, command=self.toggle_plotting)
