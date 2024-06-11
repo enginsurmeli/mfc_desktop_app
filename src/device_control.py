@@ -5,11 +5,22 @@ class DeviceControl(CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
-        self.rowconfigure((0, 1), weight=1)
-        self.columnconfigure((0, 1), weight=1)
+        label_font = ("Arial", 14)
 
-        self.spinbox = Spinbox(self, min_value=0, max_value=100)
-        self.spinbox.grid(row=0, column=0)
+        setpoint_frame = CTkFrame(self)
+        setpoint_frame.pack(anchor="nw", pady=10, padx=10)
+
+        self.setpoint_label = CTkLabel(
+            setpoint_frame, text="Setpoint", font=label_font)
+        self.setpoint_label.pack(side="left")
+
+        self.setpoint_spinbox = Spinbox(
+            setpoint_frame, min_value=0, max_value=100)
+        self.setpoint_spinbox.pack(side="left", padx=10)
+
+        self.setpoint_button = CTkButton(
+            setpoint_frame, text="Set", font=label_font, width=50)
+        self.setpoint_button.pack(side="left")
 
 
 class Spinbox(CTkFrame):
