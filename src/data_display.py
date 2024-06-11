@@ -2,17 +2,44 @@ from customtkinter import *
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
-import time
+from PIL import Image
 
 
 class DataDisplay(CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
-        # Create grid layout
-        self.grid_rowconfigure(0, weight=0)
-        self.grid_rowconfigure(1, weight=1)
-        self.grid_columnconfigure(0, weight=1)
+        self.master = master
+        icons_folder_path = master.getIconsFolderPath()
+
+        # Load icons
+        figure_padding = 0.03
+        button_size = (90, 35)
+        icon_size = (button_size[1], button_size[1])
+
+        save_file_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "save_light.png")),
+                                  dark_image=Image.open(os.path.join(
+                                      icons_folder_path, "save_dark.png")),
+                                  size=icon_size)
+        export_image_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "export_image_light.png")),
+                                     dark_image=Image.open(os.path.join(
+                                         icons_folder_path, "export_image_dark.png")),
+                                     size=icon_size)
+        load_file_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "open_light.png")),
+                                  dark_image=Image.open(os.path.join(
+                                      icons_folder_path, "open_dark.png")),
+                                  size=icon_size)
+        clear_plot_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "clear_plot_light.png")),
+                                   dark_image=Image.open(os.path.join(
+                                       icons_folder_path, "clear_plot_dark.png")),
+                                   size=icon_size)
+
+        # Create frames
+        toolbar_frame = CTkFrame(self)
+        toolbar_frame.pack(fill="both", expand=False)
+
+        plot_frame = CTkFrame(self)
+        plot_frame.pack(fill="both", expand=True)
 
     #     # Checkbox to start/pause data logging
     #     self.plotting = BooleanVar(value=False)
