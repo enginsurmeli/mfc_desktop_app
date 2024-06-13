@@ -1,9 +1,17 @@
 from customtkinter import *
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg, NavigationToolbar2Tk)  # type: ignore
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib import pyplot as plt
+import matplotlib.animation as animation
+from matplotlib import style
+from matplotlib.widgets import SpanSelector
+from matplotlib.backend_bases import key_press_handler
+from matplotlib import gridspec
 import numpy as np
 from PIL import Image
 import tkinter.ttk as ttk
+import tkinter.filedialog as fd
 
 
 class DataDisplay(CTkFrame):
@@ -86,6 +94,17 @@ class DataDisplay(CTkFrame):
         self.clear_plot_button.pack(
             side='left', expand=False, padx=button_padding, pady=(0, button_padding))
 
+        # Create a figure and axis
+        self.figure = Figure(figsize=(4, 3), dpi=100)
+        self.ax = self.figure.add_subplot(111)
+        self.line_plot, = self.ax.plot([], [])
+        self.figure.subplots_adjust(left=figure_padding, right=1-figure_padding,
+                                    top=1-figure_padding, bottom=figure_padding)
+
+        self.canvas = FigureCanvasTkAgg(self.figure, master=plot_frame)
+        self.canvas.get_tk_widget().pack(side='top', fill='both', expand=True)
+        # self.canvas.draw()
+
     def startDataStream(self):
         pass
 
@@ -96,9 +115,34 @@ class DataDisplay(CTkFrame):
         pass
 
     def exportGraphImage(self):
-        pass
+        save_filepath = fd.asksaveasfilename(
+            initialdir=f"{self.save_folder}/", title="Select a file", filetypes=(("PNG files", ".png"), ("PDF files", ".pdf"), ("SVG files", ".svg"), ("EPS files", ".eps")), defaultextension="*.*")
+        if save_filepath:
+            self.fig.savefig(save_filepath, dpi=400, transparent=False,
+                             facecolor=self.fig.get_facecolor(), edgecolor='none')
 
     def clearPlot(self):
+        pass
+
+    def updateSaveFolder(self, save_folder_path):
+        self.save_folder_path = save_folder_path
+
+    def updateTheme(self, color_palette: dict):
+        self.figure.set_facecolor(color_palette["bg"])
+        self.ax.set_facecolor(color_palette["bg"])
+        self.ax.tick_params(axis='x', colors=color_palette["fg"], labelsize=11)
+        self.ax.xaxis.label.set_color(color_palette["fg"])
+        self.ax.spines['bottom'].set_color(color_palette["fg"])
+        self.ax.spines['top'].set_color(color_palette["fg"])
+        self.ax.spines['right'].set_color(color_palette["fg"])
+        self.ax.spines['left'].set_color(color_palette["fg"])
+        self.ax.set_xlabel("Time (s)", fontsize=12, color=color_palette["fg"])
+        self.ax.set_ylabel("Flow Rate (sccm)", fontsize=12,
+                           color=color_palette["fg"])
+
+        self.figure.canvas.draw_idle()
+
+    def configureButtons(self, buttons: tuple, state: str):
         pass
 
     #     # Checkbox to start/pause data Stream

@@ -42,22 +42,23 @@ class App(CTk):
         except:
             pass
 
-        settings_data = self.loadSettings()
-        self.applySettings(settings_data)
-
         # configure grid layout
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=3)
         self.grid_rowconfigure(0, weight=1)
 
-        # create frames
-        inner_frame_padding = 0
+        # load settings
+        self.settings_data = self.loadSettings()
 
+        # create frames
         self.sidebar_menu_frame = sidebar_menu.SidebarMenu(self)
         self.sidebar_menu_frame.grid(row=0, column=0, sticky="nsew")
 
         self.dashboard_frame = dashboard.Dashboard(self)
         self.dashboard_frame.grid(row=0, column=1, sticky="nsew")
+
+        # apply settings
+        self.applySettings(self.settings_data)
 
     def loadSettings(self):
         settings_data = {}
@@ -74,7 +75,6 @@ class App(CTk):
         return settings_data
 
     def applySettings(self, settings_data: dict):
-        self.settings_data = settings_data
         serial_line_ending = settings_data.get('lineending')
         baudrate = settings_data.get('baudrate')
         serial_port = settings_data.get('port')
@@ -88,6 +88,11 @@ class App(CTk):
         # set theme and appearance mode
         set_appearance_mode(appearance)
         # set_default_color_theme("blue")
+
+        # change color of plot area
+        color_palette = {'Light': {'bg': '#dbdbdb', 'fg': '#252526'}, 'Dark': {
+            'bg': '#2b2b2b', 'fg': '#dce4ee'}}
+        self.dashboard_frame.updatePlotTheme(color_palette.get(appearance))
 
         # change save folder
         # TODO: implement save folder change

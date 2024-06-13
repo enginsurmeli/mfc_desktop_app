@@ -24,8 +24,8 @@ class Dashboard(CTkTabview):
         self._configure_grid()
 
         # add frames on tabs
-        home_frame = home.HomeFrame(parent=self, master=self.tab("Home"))
-        home_frame.pack(fill=BOTH, expand=True)
+        self.home_frame = home.HomeFrame(parent=self, master=self.tab("Home"))
+        self.home_frame.pack(fill=BOTH, expand=True)
 
         devices_frame = devices.DevicesFrame(
             parent=self, master=self.tab("Devices"))
@@ -46,3 +46,6 @@ class Dashboard(CTkTabview):
 
     def getIconsFolderPath(self):
         return self.master.icons_folder_path
+
+    def updatePlotTheme(self, color_palette: dict):
+        self.home_frame.updatePlotTheme(color_palette)

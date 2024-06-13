@@ -15,8 +15,9 @@ class HomeFrame(CTkFrame):
         self.grid_columnconfigure(1, weight=0)
 
         # Create frames
-        data_display_frame = data_display.DataDisplay(self)
-        data_display_frame.grid(row=0, column=0, columnspan=2, sticky="nsew")
+        self.data_display_frame = data_display.DataDisplay(self)
+        self.data_display_frame.grid(
+            row=0, column=0, columnspan=2, sticky="nsew")
         device_control_frame = device_control.DeviceControl(self)
         device_control_frame.grid(row=1, column=0, sticky="nsew")
         serial_console_frame = serial_console.SerialConsole(self)
@@ -24,3 +25,6 @@ class HomeFrame(CTkFrame):
 
     def getIconsFolderPath(self):
         return self.parent.getIconsFolderPath()
+
+    def updatePlotTheme(self, color_palette: dict):
+        self.data_display_frame.updateTheme(color_palette)
