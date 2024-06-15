@@ -23,7 +23,6 @@ class DataDisplay(CTkFrame):
 
         # Load icons
         button_padding = 5
-        figure_padding = 0.03
         button_width = 90
         button_height = 35
         icon_size = (button_height, button_height)
@@ -95,14 +94,12 @@ class DataDisplay(CTkFrame):
             side='left', expand=False, padx=button_padding, pady=(0, button_padding))
 
         # Create a figure and axis
-        self.figure = Figure(figsize=(4, 3), dpi=100)
+        self.figure = Figure(figsize=(4, 2), dpi=100)
         self.ax = self.figure.add_subplot(111)
         self.line_plot, = self.ax.plot([], [])
-        self.figure.subplots_adjust(left=figure_padding, right=1-figure_padding,
-                                    top=1-figure_padding, bottom=figure_padding)
 
         self.canvas = FigureCanvasTkAgg(self.figure, master=plot_frame)
-        self.canvas.get_tk_widget().pack(side='top', fill='both', expand=True)
+        self.canvas.get_tk_widget().pack(side='bottom', fill='both', expand=True)
         # self.canvas.draw()
 
     def startDataStream(self):
@@ -131,6 +128,7 @@ class DataDisplay(CTkFrame):
         self.figure.set_facecolor(color_palette["bg"])
         self.ax.set_facecolor(color_palette["bg"])
         self.ax.tick_params(axis='x', colors=color_palette["fg"], labelsize=11)
+        self.ax.tick_params(axis='y', colors=color_palette["fg"], labelsize=11)
         self.ax.xaxis.label.set_color(color_palette["fg"])
         self.ax.spines['bottom'].set_color(color_palette["fg"])
         self.ax.spines['top'].set_color(color_palette["fg"])
