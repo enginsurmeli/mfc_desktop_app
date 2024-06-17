@@ -59,7 +59,7 @@ class DataDisplay(CTkFrame):
 
         separator1 = ttk.Separator(
             toolbar_frame, orient="vertical")
-        separator1.pack(side='left', expand=False,
+        separator1.pack(side='left', fill='y',
                         padx=button_padding, pady=(0, button_padding))
 
         self.save_file_button = CTkButton(
@@ -74,7 +74,7 @@ class DataDisplay(CTkFrame):
 
         separator2 = ttk.Separator(
             toolbar_frame, orient="vertical")
-        separator2.pack(side='left', expand=False,
+        separator2.pack(side='left', fill='y',
                         padx=button_padding, pady=(0, button_padding))
 
         self.export_image_button = CTkButton(
@@ -84,7 +84,7 @@ class DataDisplay(CTkFrame):
 
         separator3 = ttk.Separator(
             toolbar_frame, orient="vertical")
-        separator3.pack(side='left', expand=False,
+        separator3.pack(side='left', fill='y',
                         padx=button_padding, pady=(0, button_padding))
 
         self.clear_plot_button = CTkButton(
