@@ -1,6 +1,5 @@
 from customtkinter import *
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)  # type: ignore
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 from matplotlib.figure import Figure
 from matplotlib import pyplot as plt
 import matplotlib.animation as animation
@@ -9,7 +8,7 @@ from matplotlib.widgets import SpanSelector
 from matplotlib.backend_bases import key_press_handler
 from matplotlib import gridspec
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageTk
 import tkinter.ttk as ttk
 import tkinter.filedialog as fd
 
@@ -94,13 +93,37 @@ class DataDisplay(CTkFrame):
             side='left', expand=False, padx=button_padding, pady=(0, button_padding))
 
         # Create a figure and axis
-        self.figure = Figure(figsize=(4, 2), dpi=100)
+        self.canvas = CTkCanvas(self)
+        self.canvas.pack(side='top', fill='both', expand=True)
+
+        # self.canvas.draw()
+        self.figure = Figure(figsize=(4, 1), dpi=100)
         self.ax = self.figure.add_subplot(111)
         self.line_plot, = self.ax.plot([], [])
 
-        self.canvas = FigureCanvasTkAgg(self.figure, master=plot_frame)
-        self.canvas.get_tk_widget().pack(side='bottom', fill='both', expand=True)
-        # self.canvas.draw()
+        self.bind("<Configure>", self.on_resize)
+        self.resize_timer = None
+
+        self.image = None
+
+    def on_resize(self, event):
+        if self.resize_timer is not None:
+            self.after_cancel(self.resize_timer)
+        self.resize_timer = self.after(200, self.update_plot_image)
+
+    def update_plot_image(self):
+        self.figure.set_size_inches(
+            self.winfo_width() / 100, self.winfo_height() / 100)
+
+        agg_canvas = FigureCanvasTkAgg(self.figure)
+        agg_canvas.draw()
+
+        agg_image = agg_canvas.buffer_rgba()
+        pil_image = Image.frombuffer(
+            "RGBA", (self.figure.canvas.get_width_height()), agg_image, "raw", "RGBA", 0, 1)
+        self.image = ImageTk.PhotoImage(pil_image)
+
+        self.canvas.create_image(0, 0, anchor='nw', image=self.image)
 
     def startDataStream(self):
         pass
@@ -115,8 +138,8 @@ class DataDisplay(CTkFrame):
         save_filepath = fd.asksaveasfilename(
             initialdir=f"{self.save_folder}/", title="Select a file", filetypes=(("PNG files", ".png"), ("PDF files", ".pdf"), ("SVG files", ".svg"), ("EPS files", ".eps")), defaultextension="*.*")
         if save_filepath:
-            self.fig.savefig(save_filepath, dpi=400, transparent=False,
-                             facecolor=self.fig.get_facecolor(), edgecolor='none')
+            self.figure.savefig(save_filepath, dpi=400, transparent=False,
+                                facecolor=self.figure.get_facecolor(), edgecolor='none')
 
     def clearPlot(self):
         pass
