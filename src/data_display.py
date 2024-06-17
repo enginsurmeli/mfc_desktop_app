@@ -94,10 +94,9 @@ class DataDisplay(CTkFrame):
 
         # Create a figure and axis
         self.canvas = CTkCanvas(self)
-        self.canvas.pack(side='top', fill='both', expand=True)
+        self.canvas.pack(fill='both', expand=True)
 
-        # self.canvas.draw()
-        self.figure = Figure(figsize=(4, 1), dpi=100)
+        self.figure = Figure(dpi=100)
         self.ax = self.figure.add_subplot(111)
         self.line_plot, = self.ax.plot([], [])
 
