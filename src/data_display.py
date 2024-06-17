@@ -112,7 +112,7 @@ class DataDisplay(CTkFrame):
 
     def update_plot_image(self):
         self.figure.set_size_inches(
-            self.winfo_width() / 100, self.winfo_height() / 100)
+            self.winfo_width() / self.figure.get_dpi(), self.winfo_height() / self.figure.get_dpi())
 
         agg_canvas = FigureCanvasTkAgg(self.figure)
         agg_canvas.draw()
