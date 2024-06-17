@@ -147,6 +147,7 @@ class DataDisplay(CTkFrame):
         self.save_folder_path = save_folder_path
 
     def updateTheme(self, color_palette: dict):
+        self.canvas.configure(bg=color_palette["bg"])
         self.figure.set_facecolor(color_palette["bg"])
         self.ax.set_facecolor(color_palette["bg"])
         self.ax.tick_params(axis='x', colors=color_palette["fg"], labelsize=11)

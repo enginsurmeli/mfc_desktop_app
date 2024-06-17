@@ -6,6 +6,6 @@
         "/dev/cu.Bluetooth-Incoming-Port",
         "/dev/cu.wlan-debug"
     ],
-    "appearance": "Light",
+    "appearance": "Dark",
     "save_folder": "/Users/engin/GitHub/mfc_desktop_app/misc"
 }
