@@ -90,8 +90,9 @@ class App(CTk):
         # set_default_color_theme("blue")
 
         # change color of plot area
+        # TODO: when 'System' is selected, the colors should be either dark or light based on the system theme
         color_palette = {'Light': {'bg': '#dbdbdb', 'fg': '#252526'}, 'Dark': {
-            'bg': '#2b2b2b', 'fg': '#dce4ee'}, 'System': {'bg': '#2b2b2b', 'fg': '#dce4ee'}}
+            'bg': '#2b2b2b', 'fg': '#dce4ee'}, 'System': {'bg': '', 'fg': ''}}
         self.dashboard_frame.updatePlotTheme(color_palette.get(appearance))
 
         # change save folder
