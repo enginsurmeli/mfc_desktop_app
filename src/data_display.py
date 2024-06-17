@@ -46,7 +46,7 @@ class DataDisplay(CTkFrame):
 
         # Create frames
         toolbar_frame = CTkFrame(self)
-        toolbar_frame.pack(fill="both", expand=False)
+        toolbar_frame.pack(fill="x", expand=False)
 
         plot_frame = CTkFrame(self)
         plot_frame.pack(fill="both", expand=True)
