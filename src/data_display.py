@@ -100,6 +100,8 @@ class DataDisplay(CTkFrame):
         self.ax = self.figure.add_subplot(111)
         self.line_plot, = self.ax.plot([], [])
 
+        self.figure.tight_layout()
+
         self.bind("<Configure>", self.on_resize)
         self.resize_timer = None
 
