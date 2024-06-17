@@ -91,7 +91,7 @@ class App(CTk):
 
         # change color of plot area
         color_palette = {'Light': {'bg': '#dbdbdb', 'fg': '#252526'}, 'Dark': {
-            'bg': '#2b2b2b', 'fg': '#dce4ee'}}
+            'bg': '#2b2b2b', 'fg': '#dce4ee'}, 'System': {'bg': '#2b2b2b', 'fg': '#dce4ee'}}
         self.dashboard_frame.updatePlotTheme(color_palette.get(appearance))
 
         # change save folder

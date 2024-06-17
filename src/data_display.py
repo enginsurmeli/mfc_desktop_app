@@ -135,7 +135,7 @@ class DataDisplay(CTkFrame):
 
     def exportGraphImage(self):
         save_filepath = fd.asksaveasfilename(
-            initialdir=f"{self.save_folder}/", title="Select a file", filetypes=(("PNG files", ".png"), ("PDF files", ".pdf"), ("SVG files", ".svg"), ("EPS files", ".eps")), defaultextension="*.*")
+            initialdir=f"{self.save_folder_path}/", title="Select a file", filetypes=(("PNG files", ".png"), ("PDF files", ".pdf"), ("SVG files", ".svg"), ("EPS files", ".eps")), defaultextension="*.*")
         if save_filepath:
             self.figure.savefig(save_filepath, dpi=400, transparent=False,
                                 facecolor=self.figure.get_facecolor(), edgecolor='none')
@@ -162,6 +162,7 @@ class DataDisplay(CTkFrame):
                            color=color_palette["fg"])
 
         self.figure.canvas.draw_idle()
+        self.update_plot_image()
 
     def configureButtons(self, buttons: tuple, state: str):
         pass
