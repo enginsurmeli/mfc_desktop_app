@@ -81,7 +81,7 @@ class SettingsFrame(CTkFrame):
         appearance_label.pack(side="left", padx=10, pady=10)
 
         self.appearance_optionmenu = CTkOptionMenu(
-            appearance_frame, values=["Light", "Dark", "System"])
+            appearance_frame, values=["Light", "Dark"])
         self.appearance_optionmenu.pack(side="left", padx=10, pady=10)
 
         separator_2 = ttk.Separator(self.settings_frame, orient="horizontal")
