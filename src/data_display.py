@@ -93,7 +93,7 @@ class DataDisplay(CTkFrame):
             side='left', expand=False, padx=button_padding, pady=(0, button_padding))
 
         # Create a figure and axis
-        self.canvas = CTkCanvas(self)
+        self.canvas = CTkCanvas(plot_frame)
         self.canvas.pack(fill='both', expand=True)
 
         self.figure = Figure(dpi=100)
