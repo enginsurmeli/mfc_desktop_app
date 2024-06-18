@@ -18,12 +18,12 @@ class DataDisplay(CTkFrame):
         super().__init__(master)
 
         self.master = master
-        icons_folder_path = master.getIconsFolderPath()
+        self.icons_folder_path = master.getIconsFolderPath()
 
-        self.create_toolbar_frame(icons_folder_path)
+        self.create_toolbar_frame()
         self.create_plot_frame()
 
-    def create_toolbar_frame(self, icons_folder_path):
+    def create_toolbar_frame(self):
         # Create frame
         toolbar_frame = CTkFrame(self)
         toolbar_frame.pack(fill="x", expand=False)
@@ -34,22 +34,10 @@ class DataDisplay(CTkFrame):
         button_height = 35
         icon_size = (button_height, button_height)
 
-        save_file_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "save_light.png")),
-                                  dark_image=Image.open(os.path.join(
-                                      icons_folder_path, "save_dark.png")),
-                                  size=icon_size)
-        export_image_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "export_image_light.png")),
-                                     dark_image=Image.open(os.path.join(
-                                         icons_folder_path, "export_image_dark.png")),
-                                     size=icon_size)
-        load_file_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "open_light.png")),
-                                  dark_image=Image.open(os.path.join(
-                                      icons_folder_path, "open_dark.png")),
-                                  size=icon_size)
-        clear_plot_icon = CTkImage(light_image=Image.open(os.path.join(icons_folder_path, "clear_plot_light.png")),
-                                   dark_image=Image.open(os.path.join(
-                                       icons_folder_path, "clear_plot_dark.png")),
-                                   size=icon_size)
+        save_file_icon = self.load_icon("save", icon_size)
+        export_image_icon = self.load_icon("export_image", icon_size)
+        load_file_icon = self.load_icon("open", icon_size)
+        clear_plot_icon = self.load_icon("clear_plot", icon_size)
 
         # Create toolbar buttons
         self.start_data_log_var = StringVar(value="Off")
@@ -168,6 +156,13 @@ class DataDisplay(CTkFrame):
 
     def configureButtons(self, buttons: tuple, state: str):
         pass
+
+    def load_icon(self, name, size):
+        light_image = Image.open(os.path.join(
+            self.icons_folder_path, f"{name}_light.png"))
+        dark_image = Image.open(os.path.join(
+            self.icons_folder_path, f"{name}_dark.png"))
+        return CTkImage(light_image=light_image, dark_image=dark_image, size=size)
 
     def add_toolbar_separator(self, parent, padding):
         # Add a vertical separator to the toolbar
