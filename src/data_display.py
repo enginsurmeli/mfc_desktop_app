@@ -32,12 +32,6 @@ class DataDisplay(CTkFrame):
         button_padding = 5
         button_width = 90
         button_height = 35
-        icon_size = (button_height, button_height)
-
-        save_file_icon = self.load_icon("save", icon_size)
-        export_image_icon = self.load_icon("export_image", icon_size)
-        load_file_icon = self.load_icon("open", icon_size)
-        clear_plot_icon = self.load_icon("clear_plot", icon_size)
 
         # Create toolbar buttons
         self.start_data_log_var = StringVar(value="Off")
@@ -49,31 +43,23 @@ class DataDisplay(CTkFrame):
         self.add_toolbar_separator(
             parent=toolbar_frame, padding=button_padding)
 
-        self.save_file_button = CTkButton(
-            master=toolbar_frame, text="Save", image=save_file_icon, command=self.saveFile, width=button_width, height=button_height)
-        self.save_file_button.pack(
-            side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+        self.save_file_button = self.create_toolbar_button(toolbar_frame, "Save",
+                                                           "save", button_width, button_height, button_padding, self.saveFile)
 
-        self.load_file_button = CTkButton(
-            master=toolbar_frame, text="Open", image=load_file_icon, command=self.loadFile, width=button_width, height=button_height)
-        self.load_file_button.pack(
-            side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+        self.load_file_button = self.create_toolbar_button(toolbar_frame, "Open",
+                                                           "open", button_width, button_height, button_padding, self.loadFile)
 
         self.add_toolbar_separator(
             parent=toolbar_frame, padding=button_padding)
 
-        self.export_image_button = CTkButton(
-            master=toolbar_frame, text="Export\nImage", image=export_image_icon, command=self.exportGraphImage, width=button_width, height=button_height)
-        self.export_image_button.pack(
-            side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+        self.export_image_button = self.create_toolbar_button(
+            toolbar_frame, "Export\nImage", "export_image", button_width, button_height, button_padding, self.exportGraphImage)
 
         self.add_toolbar_separator(
             parent=toolbar_frame, padding=button_padding)
 
-        self.clear_plot_button = CTkButton(
-            master=toolbar_frame, text="Clear", image=clear_plot_icon, command=self.clearPlot, width=button_width, height=button_height)
-        self.clear_plot_button.pack(
-            side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+        self.clear_plot_button = self.create_toolbar_button(
+            toolbar_frame, "Clear", "clear_plot", button_width, button_height, button_padding, self.clearPlot)
 
     def create_plot_frame(self):
         # Create frame
@@ -163,6 +149,15 @@ class DataDisplay(CTkFrame):
         dark_image = Image.open(os.path.join(
             self.icons_folder_path, f"{name}_dark.png"))
         return CTkImage(light_image=light_image, dark_image=dark_image, size=size)
+
+    def create_toolbar_button(self, parent, text, icon_name, width, height, padding, command):
+        icon = self.load_icon(icon_name, (height, height))
+        button = CTkButton(
+            master=parent, text=text, image=icon, command=command,
+            width=width, height=height
+        )
+        button.pack(side='left', expand=False, padx=padding, pady=(0, padding))
+        return button
 
     def add_toolbar_separator(self, parent, padding):
         # Add a vertical separator to the toolbar
