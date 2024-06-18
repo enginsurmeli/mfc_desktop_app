@@ -58,10 +58,8 @@ class DataDisplay(CTkFrame):
         self.start_data_log_switch.pack(
             side='left', expand=False, padx=button_padding, pady=(0, button_padding))
 
-        separator1 = ttk.Separator(
-            toolbar_frame, orient="vertical")
-        separator1.pack(side='left', fill='y',
-                        padx=button_padding, pady=(0, button_padding))
+        self.add_toolbar_separator(
+            parent=toolbar_frame, padding=button_padding)
 
         self.save_file_button = CTkButton(
             master=toolbar_frame, text="Save", image=save_file_icon, command=self.saveFile, width=button_width, height=button_height)
@@ -73,20 +71,16 @@ class DataDisplay(CTkFrame):
         self.load_file_button.pack(
             side='left', expand=False, padx=button_padding, pady=(0, button_padding))
 
-        separator2 = ttk.Separator(
-            toolbar_frame, orient="vertical")
-        separator2.pack(side='left', fill='y',
-                        padx=button_padding, pady=(0, button_padding))
+        self.add_toolbar_separator(
+            parent=toolbar_frame, padding=button_padding)
 
         self.export_image_button = CTkButton(
             master=toolbar_frame, text="Export\nImage", image=export_image_icon, command=self.exportGraphImage, width=button_width, height=button_height)
         self.export_image_button.pack(
             side='left', expand=False, padx=button_padding, pady=(0, button_padding))
 
-        separator3 = ttk.Separator(
-            toolbar_frame, orient="vertical")
-        separator3.pack(side='left', fill='y',
-                        padx=button_padding, pady=(0, button_padding))
+        self.add_toolbar_separator(
+            parent=toolbar_frame, padding=button_padding)
 
         self.clear_plot_button = CTkButton(
             master=toolbar_frame, text="Clear", image=clear_plot_icon, command=self.clearPlot, width=button_width, height=button_height)
@@ -174,6 +168,11 @@ class DataDisplay(CTkFrame):
 
     def configureButtons(self, buttons: tuple, state: str):
         pass
+
+    def add_toolbar_separator(self, parent, padding):
+        # Add a vertical separator to the toolbar
+        separator = ttk.Separator(parent, orient="vertical")
+        separator.pack(side='left', fill='y', padx=padding)
 
     #     # Checkbox to start/pause data Stream
     #     self.plotting = BooleanVar(value=False)
