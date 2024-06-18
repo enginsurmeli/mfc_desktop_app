@@ -28,7 +28,7 @@ class DataDisplay(CTkFrame):
         toolbar_frame = CTkFrame(self)
         toolbar_frame.pack(fill="x", expand=False)
 
-        # Load icons
+        # Define button properties
         button_padding = 5
         button_width = 90
         button_height = 35
@@ -144,11 +144,34 @@ class DataDisplay(CTkFrame):
         pass
 
     def loadIcon(self, name, size):
-        light_image = Image.open(os.path.join(
-            self.icons_folder_path, f"{name}_light.png"))
-        dark_image = Image.open(os.path.join(
-            self.icons_folder_path, f"{name}_dark.png"))
+        """Load an icon from the icons folder, handle file not found errors."""
+        try:
+            light_image_path = os.path.join(
+                self.icons_folder_path, f"{name}_light.png")
+            dark_image_path = os.path.join(
+                self.icons_folder_path, f"{name}_dark.png")
+
+            if not os.path.isfile(light_image_path):
+                raise FileNotFoundError(
+                    f"Light icon '{name}_light.png' not found in '{self.icons_folder_path}'")
+            if not os.path.isfile(dark_image_path):
+                raise FileNotFoundError(
+                    f"Dark icon '{name}_dark.png' not found in '{self.icons_folder_path}'")
+
+            light_image = Image.open(light_image_path)
+            dark_image = Image.open(dark_image_path)
+        except FileNotFoundError as e:
+            print(e)  # Log the error for debugging
+
+            # Fallback to a default icon or a transparent image
+            light_image = self.default_icon(size)
+            dark_image = self.default_icon(size)
+
         return CTkImage(light_image=light_image, dark_image=dark_image, size=size)
+
+    def default_icon(self, size):
+        """Create a default transparent icon or placeholder."""
+        return Image.new('RGBA', size, (255, 0, 0, 0))  # Creates a transparent image
 
     def createButton(self, parent, text, icon_name, width, height, padding, command):
         icon = self.loadIcon(icon_name, (height, height))
