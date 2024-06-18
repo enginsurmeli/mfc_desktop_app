@@ -95,6 +95,7 @@ class DataDisplay(CTkFrame):
         # Create a figure and axis
         self.canvas = CTkCanvas(plot_frame)
         self.canvas.pack(fill='both', expand=True)
+        self.canvas.configure(borderwidth=0, highlightthickness=0)
 
         self.figure = Figure(dpi=100)
         self.ax = self.figure.add_subplot(111)
@@ -149,19 +150,18 @@ class DataDisplay(CTkFrame):
         self.save_folder_path = save_folder_path
 
     def updateTheme(self, color_palette: dict):
-        self.canvas.configure(bg=color_palette["bg"])
         self.figure.set_facecolor(color_palette["bg"])
         self.ax.set_facecolor(color_palette["bg"])
-        self.ax.tick_params(axis='x', colors=color_palette["fg"], labelsize=11)
-        self.ax.tick_params(axis='y', colors=color_palette["fg"], labelsize=11)
+        self.ax.tick_params(axis='x', colors=color_palette["fg"], labelsize=9)
+        self.ax.tick_params(axis='y', colors=color_palette["fg"], labelsize=9)
         self.ax.xaxis.label.set_color(color_palette["fg"])
         self.ax.spines['bottom'].set_color(color_palette["fg"])
         self.ax.spines['top'].set_color(color_palette["fg"])
         self.ax.spines['right'].set_color(color_palette["fg"])
         self.ax.spines['left'].set_color(color_palette["fg"])
-        self.ax.set_xlabel("Time (s)", fontsize=12, color=color_palette["fg"])
-        self.ax.set_ylabel("Flow Rate (sccm)", fontsize=12,
-                           color=color_palette["fg"])
+        # self.ax.set_xlabel("Time (s)", fontsize=12, color=color_palette["fg"])
+        # self.ax.set_ylabel("Flow Rate (sccm)", fontsize=12,
+        #                    color=color_palette["fg"])
 
         self.figure.canvas.draw_idle()
         self.update_plot_image()
