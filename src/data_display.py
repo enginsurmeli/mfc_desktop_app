@@ -20,6 +20,14 @@ class DataDisplay(CTkFrame):
         self.master = master
         icons_folder_path = master.getIconsFolderPath()
 
+        self.create_toolbar_frame(icons_folder_path)
+        self.create_plot_frame()
+
+    def create_toolbar_frame(self, icons_folder_path):
+        # Create frame
+        toolbar_frame = CTkFrame(self)
+        toolbar_frame.pack(fill="x", expand=False)
+
         # Load icons
         button_padding = 5
         button_width = 90
@@ -42,13 +50,6 @@ class DataDisplay(CTkFrame):
                                    dark_image=Image.open(os.path.join(
                                        icons_folder_path, "clear_plot_dark.png")),
                                    size=icon_size)
-
-        # Create frames
-        toolbar_frame = CTkFrame(self)
-        toolbar_frame.pack(fill="x", expand=False)
-
-        plot_frame = CTkFrame(self)
-        plot_frame.pack(fill="both", expand=True)
 
         # Create toolbar buttons
         self.start_data_log_var = StringVar(value="Off")
@@ -91,6 +92,11 @@ class DataDisplay(CTkFrame):
             master=toolbar_frame, text="Clear", image=clear_plot_icon, command=self.clearPlot, width=button_width, height=button_height)
         self.clear_plot_button.pack(
             side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+
+    def create_plot_frame(self):
+        # Create frame
+        plot_frame = CTkFrame(self)
+        plot_frame.pack(fill="both", expand=True)
 
         # Create a figure and axis
         self.canvas = CTkCanvas(plot_frame)
