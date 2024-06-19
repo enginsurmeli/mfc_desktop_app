@@ -25,15 +25,15 @@ class Dashboard(CTkTabview):
 
         # add frames on tabs
         self.home_frame = home.HomeFrame(parent=self, master=self.tab("Home"))
-        self.home_frame.pack(fill=BOTH, expand=True)
+        self.home_frame.pack(fill='both', expand=True)
 
         devices_frame = devices.DevicesFrame(
             parent=self, master=self.tab("Devices"))
-        devices_frame.pack(fill=BOTH, expand=True)
+        devices_frame.pack(fill='both', expand=True)
 
         settings_frame = settings.SettingsFrame(
             parent=self, master=self.tab("Settings"))
-        settings_frame.pack(fill=BOTH, expand=True)
+        settings_frame.pack(fill='both', expand=True)
 
     def showTab(self, tab_name: str):
         self.set(tab_name)
