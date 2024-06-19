@@ -88,8 +88,10 @@ class DataDisplay(CTkFrame):
         self.resize_timer = self.after(200, self.updatePlotImage)
 
     def updatePlotImage(self):
+        frame_height = self.winfo_height()
+        max_figure_height = frame_height - 45  # 45 is the height of the toolbar
         self.figure.set_size_inches(
-            self.winfo_width() / self.figure.get_dpi(), self.winfo_height() / self.figure.get_dpi())
+            self.winfo_width() / self.figure.get_dpi(), max_figure_height / self.figure.get_dpi())
 
         agg_canvas = FigureCanvasTkAgg(self.figure)
         agg_canvas.draw()
