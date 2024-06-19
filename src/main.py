@@ -44,7 +44,7 @@ class App(CTk):
 
         # configure grid layout
         self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(1, weight=3)
+        self.grid_columnconfigure(1, weight=15)
         self.grid_rowconfigure(0, weight=1)
 
         # load settings
