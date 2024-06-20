@@ -75,7 +75,9 @@ class DataDisplay(CTkFrame):
         self.ax = self.figure.add_subplot(111)
         self.line_plot, = self.ax.plot([], [])
 
-        self.figure.tight_layout()
+        # self.figure.tight_layout()
+        self.figure.subplots_adjust(
+            left=0.05, right=0.99, top=0.99, bottom=0.1)
 
         self.bind("<Configure>", self.onResize)
         self.resize_timer = None
@@ -89,7 +91,7 @@ class DataDisplay(CTkFrame):
 
     def updatePlotImage(self):
         frame_height = self.winfo_height()
-        max_figure_height = frame_height - 45  # 45 is the height of the toolbar
+        max_figure_height = frame_height - 48  # temporary fix for figure height
         self.figure.set_size_inches(
             self.winfo_width() / self.figure.get_dpi(), max_figure_height / self.figure.get_dpi())
 
