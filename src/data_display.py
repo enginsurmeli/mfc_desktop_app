@@ -37,7 +37,7 @@ class DataDisplay(CTkFrame):
         # Create toolbar buttons
         self.start_data_log_var = StringVar(value="Off")
         self.start_data_log_switch = CTkSwitch(
-            master=toolbar_frame, text="Data Stream", command=lambda: self.togglePlotting, variable=self.start_data_log_var, onvalue="On", offvalue="Off")
+            master=toolbar_frame, text="Data Stream", command=self.togglePlotting, variable=self.start_data_log_var, onvalue="On", offvalue="Off")
         self.start_data_log_switch.pack(
             side='left', expand=False, padx=button_padding, pady=(0, button_padding))
 
@@ -67,10 +67,17 @@ class DataDisplay(CTkFrame):
         plot_frame = CTkFrame(self)
         plot_frame.pack(fill="both", expand=True)
 
-        # Create a figure and axis
-        self.canvas = CTkCanvas(plot_frame)
-        self.canvas.pack(fill='both', expand=True)
-        self.canvas.configure(borderwidth=0, highlightthickness=0)
+        # Create figure, canvas and axis
+        # self.canvas = CTkCanvas(plot_frame)
+        # self.canvas.pack(fill='both', expand=True)
+        # self.canvas.configure(borderwidth=0, highlightthickness=0)
+
+        self.figure = Figure(dpi=100)
+        self.ax = self.figure.add_subplot(111)
+        # self.line_plot, = self.ax.plot(self.x_data, self.y_data)
+
+        self.canvas = FigureCanvasTkAgg(self.figure, master=plot_frame)
+        self.canvas.get_tk_widget().pack(fill='both', expand=True)
 
         # Initialize data
         self.x_data = []
@@ -78,42 +85,12 @@ class DataDisplay(CTkFrame):
         self.start_time = time.time()
         self.paused_time = 0
 
-        self.figure = Figure(dpi=100)
-        self.ax = self.figure.add_subplot(111)
-        # self.line_plot, = self.ax.plot(self.x_data, self.y_data)
-
         # start the plot
         self.updatePlot()
 
         # self.figure.tight_layout()
         self.figure.subplots_adjust(
             left=0.05, right=0.99, top=0.99, bottom=0.1)
-
-        self.bind("<Configure>", self.onResize)
-        self.resize_timer = None
-
-        self.image = None
-
-    def onResize(self, event):
-        if self.resize_timer is not None:
-            self.after_cancel(self.resize_timer)
-        self.resize_timer = self.after(200, self.updatePlotImage)
-
-    def updatePlotImage(self):
-        frame_height = self.winfo_height()
-        max_figure_height = frame_height - 48  # temporary fix for figure height
-        self.figure.set_size_inches(
-            self.winfo_width() / self.figure.get_dpi(), max_figure_height / self.figure.get_dpi())
-
-        agg_canvas = FigureCanvasTkAgg(self.figure)
-        agg_canvas.draw()
-
-        agg_image = agg_canvas.buffer_rgba()
-        pil_image = Image.frombuffer(
-            "RGBA", (self.figure.canvas.get_width_height()), agg_image, "raw", "RGBA", 0, 1)
-        self.image = ImageTk.PhotoImage(pil_image)
-
-        self.canvas.create_image(0, 0, anchor='nw', image=self.image)
 
     def startDataStream(self):
         pass
@@ -152,7 +129,6 @@ class DataDisplay(CTkFrame):
         #                    color=color_palette["fg"])
 
         self.figure.canvas.draw_idle()
-        self.updatePlotImage()
 
     def configureButtons(self, buttons: tuple, state: str):
         pass
@@ -212,7 +188,6 @@ class DataDisplay(CTkFrame):
 
     def updatePlot(self):
         if self.start_data_log_var.get() == "On":
-            print(self.start_data_log_var.get())
             # Update data
             current_time = time.time() - self.start_time
             self.x_data.append(current_time)
@@ -224,7 +199,7 @@ class DataDisplay(CTkFrame):
             self.ax.legend()
 
             # Draw the canvas
-            self.figure.canvas.draw()
+            self.canvas.draw()
 
         # Call this function again after 10 milliseconds
         self.after(10, self.updatePlot)

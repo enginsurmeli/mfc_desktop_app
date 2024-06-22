@@ -25,7 +25,8 @@ class App(CTk):
         app_window_height = 600
         self.geometry(
             f"{app_window_width}x{app_window_height}+{int(screen_width/2-app_window_width/2)}+{int(screen_height/2-app_window_height/2)}")
-        self.minsize(app_window_width, app_window_height)
+        # self.minsize(app_window_width, app_window_height)
+        self.resizable(False, False)
         self.grab_set()
 
         self.icons_folder_path = os.path.join(
