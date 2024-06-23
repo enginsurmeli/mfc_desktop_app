@@ -67,27 +67,29 @@ class DataDisplay(CTkFrame):
         plot_frame = CTkFrame(self)
         plot_frame.pack(fill="both", expand=True)
 
-        # Create figure, canvas and axis
-        # self.canvas = CTkCanvas(plot_frame)
-        # self.canvas.pack(fill='both', expand=True)
-        # self.canvas.configure(borderwidth=0, highlightthickness=0)
-
-        self.figure = Figure(dpi=100)
+        # self.figure, self.ax = plt.subplots()
+        self.figure = Figure()
         self.ax = self.figure.add_subplot(111)
-        self.line_plot, = self.ax.plot([], [])
-
         self.canvas = FigureCanvasTkAgg(self.figure, master=plot_frame)
         self.canvas.get_tk_widget().pack(fill='both', expand=True)
 
+        # Adjust plot margins
+        self.figure.tight_layout()
+
         # Initialize data
+        self.x_data = []
+        self.y_data = {'Sine': [],
+                       'Cosine': [],
+                       'Sine x Cosine': []}
+        self.lines = {}
         self.start_time = time.time()
         self.paused_time = 0
 
-        # start the plot
-        self.updatePlot()
+        for label in self.y_data.keys():
+            self.lines[label] = self.ax.plot([], [], label=label)[0]
 
-        self.figure.tight_layout()
-        # self.figure.subplots_adjust(left=0.05, right=0.99, top=0.95, bottom=0.1)
+        # self.ax.legend()
+        # self.canvas.draw()
 
     def startDataStream(self):
         pass
@@ -189,19 +191,22 @@ class DataDisplay(CTkFrame):
         if self.start_data_log_var.get() == "On":
             # Update data
             current_time = time.time() - self.start_time
-            # self.x_data.append(current_time)
-            # self.y_data.append(np.sin(current_time))
-            self.line_plot.set_xdata(
-                np.append(self.line_plot.get_xdata(), current_time))
-            self.line_plot.set_ydata(
-                np.append(self.line_plot.get_ydata(), np.sin(current_time)))
+            self.x_data.append(current_time)
 
-            # Clear the axis and replot
-            self.ax.clear()
-            # self.ax.plot(self.x_data, self.y_data, label="Sine Wave")
-            self.ax.plot(self.line_plot.get_xdata(),
-                         self.line_plot.get_ydata())
-            self.ax.legend()
+            new_y_data = {
+                'Sine': np.sin(current_time),
+                'Cosine': np.cos(current_time),
+                'Sine x Cosine': np.sin(current_time) * np.cos(current_time)
+            }
+
+            # Update y data for each line
+            for label, y_value in new_y_data.items():
+                self.y_data[label].append(y_value)
+                self.lines[label].set_data(self.x_data, self.y_data[label])
+
+            # Rescale the axis
+            self.ax.relim()
+            self.ax.autoscale_view()
 
             # Draw the canvas
             self.canvas.draw()
