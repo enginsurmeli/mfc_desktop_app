@@ -74,23 +74,20 @@ class DataDisplay(CTkFrame):
 
         self.figure = Figure(dpi=100)
         self.ax = self.figure.add_subplot(111)
-        # self.line_plot, = self.ax.plot(self.x_data, self.y_data)
+        self.line_plot, = self.ax.plot([], [])
 
         self.canvas = FigureCanvasTkAgg(self.figure, master=plot_frame)
         self.canvas.get_tk_widget().pack(fill='both', expand=True)
 
         # Initialize data
-        self.x_data = []
-        self.y_data = []
         self.start_time = time.time()
         self.paused_time = 0
 
         # start the plot
         self.updatePlot()
 
-        # self.figure.tight_layout()
-        self.figure.subplots_adjust(
-            left=0.05, right=0.99, top=0.99, bottom=0.1)
+        self.figure.tight_layout()
+        # self.figure.subplots_adjust(left=0.05, right=0.99, top=0.95, bottom=0.1)
 
     def startDataStream(self):
         pass
@@ -109,7 +106,9 @@ class DataDisplay(CTkFrame):
                                 facecolor=self.figure.get_facecolor(), edgecolor='none')
 
     def clearPlot(self):
-        pass
+        self.start_data_log_var.set("Off")
+        self.ax.clear()
+        self.canvas.draw()
 
     def updateSaveFolder(self, save_folder_path):
         self.save_folder_path = save_folder_path
@@ -190,12 +189,18 @@ class DataDisplay(CTkFrame):
         if self.start_data_log_var.get() == "On":
             # Update data
             current_time = time.time() - self.start_time
-            self.x_data.append(current_time)
-            self.y_data.append(np.sin(current_time))
+            # self.x_data.append(current_time)
+            # self.y_data.append(np.sin(current_time))
+            self.line_plot.set_xdata(
+                np.append(self.line_plot.get_xdata(), current_time))
+            self.line_plot.set_ydata(
+                np.append(self.line_plot.get_ydata(), np.sin(current_time)))
 
             # Clear the axis and replot
             self.ax.clear()
-            self.ax.plot(self.x_data, self.y_data, label="Sine Wave")
+            # self.ax.plot(self.x_data, self.y_data, label="Sine Wave")
+            self.ax.plot(self.line_plot.get_xdata(),
+                         self.line_plot.get_ydata())
             self.ax.legend()
 
             # Draw the canvas
