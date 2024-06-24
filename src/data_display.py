@@ -80,20 +80,21 @@ class DataDisplay(CTkFrame):
         # Adjust plot margins
         self.figure.tight_layout()
 
+        # Create a dictionary to store line objects
+        self.lines = {}
+
         # Initialize data
         self.x_data = []
         self.y_data = {'Sine': [],
                        'Cosine': [],
                        'Sine x Cosine': []}
-        self.lines = {}
         self.start_time = time.time()
         self.paused_time = 0
 
         for label in self.y_data.keys():
             self.lines[label] = self.ax.plot([], [], label=label)[0]
 
-        # self.ax.legend()
-        # self.canvas.draw()
+        self.updatePlot()
 
     def startDataStream(self):
         pass
@@ -184,11 +185,9 @@ class DataDisplay(CTkFrame):
 
     def togglePlotting(self):
         if self.data_log_var.get() == "On":
-            # self.checkbox.configure(text="Pause")
             # Adjust start time to account for the pause duration
             self.start_time += time.time() - self.paused_time
         else:
-            # self.checkbox.configure(text="Start")
             self.paused_time = time.time()
 
     def updatePlot(self):
