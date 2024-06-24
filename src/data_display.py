@@ -32,13 +32,17 @@ class DataDisplay(CTkFrame):
         # Define button properties
         button_padding = 5
         button_width = 90
-        button_height = 35
+        button_height = 30
 
         # Create toolbar buttons
-        self.start_data_log_var = StringVar(value="Off")
-        self.start_data_log_switch = CTkSwitch(
-            master=toolbar_frame, text="Data Stream", command=self.togglePlotting, variable=self.start_data_log_var, onvalue="On", offvalue="Off")
-        self.start_data_log_switch.pack(
+        # self.data_log_label = CTkLabel(
+        #     master=toolbar_frame, text="Data Log")
+        # self.data_log_label.pack(
+        #     side='left', expand=False, padx=button_padding, pady=(0, button_padding))
+        self.data_log_var = StringVar(value="Off")
+        self.data_log_switch = CTkSwitch(
+            master=toolbar_frame, text="Data Log", command=self.togglePlotting, variable=self.data_log_var, onvalue="On", offvalue="Off")
+        self.data_log_switch.pack(
             side='left', expand=False, padx=button_padding, pady=(0, button_padding))
 
         self.addSeparator(
@@ -54,7 +58,7 @@ class DataDisplay(CTkFrame):
             parent=toolbar_frame, padding=button_padding)
 
         self.export_image_button = self.createButton(
-            toolbar_frame, "Export\nImage", "export_image", button_width, button_height, button_padding, self.exportGraphImage)
+            toolbar_frame, "Export", "export_image", button_width, button_height, button_padding, self.exportGraphImage)
 
         self.addSeparator(
             parent=toolbar_frame, padding=button_padding)
@@ -108,7 +112,7 @@ class DataDisplay(CTkFrame):
                                 facecolor=self.figure.get_facecolor(), edgecolor='none')
 
     def clearPlot(self):
-        self.start_data_log_var.set("Off")
+        self.data_log_var.set("Off")
         self.ax.clear()
         self.canvas.draw()
 
@@ -179,7 +183,7 @@ class DataDisplay(CTkFrame):
         separator.pack(side='left', fill='y', padx=padding)
 
     def togglePlotting(self):
-        if self.start_data_log_var.get() == "On":
+        if self.data_log_var.get() == "On":
             # self.checkbox.configure(text="Pause")
             # Adjust start time to account for the pause duration
             self.start_time += time.time() - self.paused_time
@@ -188,7 +192,7 @@ class DataDisplay(CTkFrame):
             self.paused_time = time.time()
 
     def updatePlot(self):
-        if self.start_data_log_var.get() == "On":
+        if self.data_log_var.get() == "On":
             # Update data
             current_time = time.time() - self.start_time
             self.x_data.append(current_time)
